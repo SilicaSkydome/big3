@@ -1,0 +1,39 @@
+.menu{
+    position: absolute;
+    top: 80px;
+    left: 0;
+    bottom: 0;
+    background: #fff;
+    width: 140px;
+    height: auto;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+
+    z-index: 1;
+}
+
+.button{
+    padding: 25px 30px;
+    text-align: center;
+    color: #9C9C9C;
+    fill: #9C9C9C;
+    cursor: pointer;
+
+    transition: all .1s linear;
+}
+.button:hover{
+    fill: #FF5761;
+    color: #FF5761;
+}
+.button:active{
+    fill: #E4163A;
+    color: #E4163A;
+}
+
+.out{
+    color: #FF768E;
+    fill: #FF768E;
+}

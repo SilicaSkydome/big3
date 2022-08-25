@@ -1,6 +1,41 @@
+@font-face{
+  font-family: AvenirBlack;
+  src: url(./assets/fonts/Avenir-Black.ttf);
+  font-style: normal; 
+  font-weight: normal;
+}
+@font-face{
+  font-family: AvenirMedium;
+  src: url(./assets/fonts/Avenir-Medium.ttf);
+  font-style: normal; 
+  font-weight: normal;
+}
+@font-face{
+  font-family: AvenirMediumOblique;
+  src: url(./assets/fonts/Avenir-MediumOblique.ttf);
+  font-style: normal; 
+  font-weight: normal;
+}
+@font-face{
+  font-family: AvenirOblique;
+  src: url(./assets/fonts/Avenir-Oblique.ttf);
+  font-style: normal; 
+  font-weight: normal;
+}
+@font-face{
+  font-family: AvenirRoman;
+  src: url(./assets/fonts/Avenir-Roman.ttf);
+  font-style: normal; 
+  font-weight: normal;
+}
+
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+  padding: 0;
+  box-sizing: border-box;
+  background: #F6F6F6;
+
+  font-family: 'AvenirRoman', 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
   -webkit-font-smoothing: antialiased;
