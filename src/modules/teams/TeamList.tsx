@@ -18,13 +18,11 @@ export default function TeamList() {
           boxShadow: 'none'
         })
       };
-
-      const testCard: ITeamCard = {
-        "name": "testteam",
-        "foundationYear": 1999,
-        "imageUrl": "https://via.placeholder.com/150",
-        "id": 1
-      }
+      const testCards: ITeamCard[] = [
+        { "name": "testteam1", "foundationYear": 1999, "imageUrl": "https://via.placeholder.com/150", "id": 1 },
+        { "name": "testteam2", "foundationYear": 2000, "imageUrl": "https://via.placeholder.com/150", "id": 2 },
+        { "name": "testteam3", "foundationYear": 2001, "imageUrl": "https://via.placeholder.com/150", "id": 3 }
+      ]
 
     return (
         <>
@@ -34,7 +32,7 @@ export default function TeamList() {
             </div>
             
             <div className={s.content}>
-                <TeamCard cardInfo={testCard} />
+                { testCards.map(card => <TeamCard cardInfo={card} />) }
             </div>
             <span className={s.cardAmount}><Select options={cardAmount} defaultValue={{value: 6, label: 6}} menuPlacement="top" styles={style}/></span>
             <div className={s.pages}></div>
