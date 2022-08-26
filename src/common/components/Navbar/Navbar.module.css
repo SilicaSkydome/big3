@@ -21,8 +21,13 @@
     color: #9C9C9C;
     fill: #9C9C9C;
     cursor: pointer;
+    text-decoration: none;
 
     transition: all .1s linear;
+}
+.button svg{
+    display: block;
+    margin: auto;
 }
 .button:hover{
     fill: #FF5761;
@@ -32,7 +37,10 @@
     fill: #E4163A;
     color: #E4163A;
 }
-
+.active{
+    fill: #E4163A;
+    color: #E4163A;
+}
 .out{
     color: #FF768E;
     fill: #FF768E;
