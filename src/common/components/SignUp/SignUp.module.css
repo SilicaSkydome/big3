@@ -1,0 +1,170 @@
+.page{
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #fff;
+
+    display: flex;
+    flex-direction: row;
+    justify-content:stretch;
+}
+.form{
+    position: absolute;
+    left: 0;
+    width: 40%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.formContent{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    max-width:370px;
+    width: 100%;
+}
+.formContent span{
+    position: relative;
+    width: 100%;
+    height: auto;
+}
+.title{
+    font-size: 36px;
+    font-weight: 500;
+    width: 100%;
+    text-align: left;
+    margin: 0;
+    padding-bottom: 20px;
+}
+
+.formContent input{
+    box-sizing: border-box;
+    width: 100%;
+    height: 40px;
+    margin-bottom: 20px;
+
+    background: #F6F6F6;
+    border: none;
+    border-radius: 4px; 
+    outline: none;
+    transition: all .1s linear;
+}
+.formContent input:hover{
+    background: #D1D1D1;
+}
+.eye{
+    position: absolute;
+    right: 15px;
+    bottom: 30px;
+
+}
+.formContent label{
+    width: 100%;
+    text-align: left;
+}
+.link{
+    color: #E4163A;
+    text-decoration: underline;
+    text-decoration-color: #E4163A;
+}
+.image{
+    position: absolute;
+    right: 0;
+    width: 60%;
+    height: 100%;
+
+    background-color: #F5FBFF;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.agreement{
+    position: relative;
+    display: flex;
+}
+.agreement input{
+    width: 15px;
+    height: 15px;
+    opacity: 0;
+}
+.agreement label::after{
+    content: '';
+    position: absolute;
+    width: 15px;
+    height: 15px;
+    cursor: pointer;
+
+    background: #fff;
+    border: 2px solid #D1D1D1;
+    
+    border-radius: 2px;
+
+    top: 6px;
+    left: 0;
+
+    transition: all .1s linear;
+}
+.agreement label::before{
+    content: '';
+    position: absolute;
+    left: 5px;
+    top: 9px;
+    width: 3px;
+    height: 6px;
+    border: solid white;
+    border-width: 0 3px 3px 0;
+    -webkit-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    transform: rotate(45deg);
+
+    z-index: 10;
+}
+.agreement label:hover::after{
+    border-color: #E4163A;
+}
+.agreement label{
+    font-size: 22px;
+    font-weight: 500;
+    cursor: pointer;
+    text-align: left;
+}
+.agreement input:checked + label::after{
+    background: #E4163A;
+    border-color: #E4163A;
+}
+
+
+.sign{
+    width: 100%;
+    height: 40px;
+    text-align: center;
+    background: #E4163A;
+    border-radius: 4px;
+    line-height: 40px;
+    padding: 0;
+    margin: 0;
+    border: none;
+
+    color: #FFF;
+    text-decoration: none;
+
+    transition: all .1s linear;
+}
+.sign:hover{
+    background: #FF5761;
+}
+.sign:active{
+    background: #C60E2E;
+}
+.sign:disabled{
+    background: #F6F6F6;
+    color: #D1D1D1;
+}

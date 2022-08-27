@@ -26,30 +26,3 @@
     padding: 20px 50px;
     cursor: pointer;
 }
-
-.sign{
-    position: absolute;
-    width: 365px;
-    height: 40px;
-    right: 5rem;
-    top: 1.2rem;
-    text-align: center;
-    background: #E4163A;
-    border-radius: 4px;
-    line-height: 40px;
-
-    color: #FFF;
-    text-decoration: none;
-
-    transition: all .1s linear;
-}
-.sign:hover{
-    background: #FF5761;
-}
-.sign:active{
-    background: #C60E2E;
-}
-.sign:disabled{
-    background: #F6F6F6;
-    color: #D1D1D1;
-}

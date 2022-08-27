@@ -34,11 +34,16 @@
     color: #FFF;
     margin: 5px;
 }
-.year{
+.team{
     text-align: center;
     font-size: 14px;
     color: #9C9C9C;
     line-height: 24px;
     font-weight: 500;
     margin: 5px;
+}
+
+.number{
+    font-weight: bold;
+    color: #E4163A;
 }

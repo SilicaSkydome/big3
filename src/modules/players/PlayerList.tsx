@@ -1,41 +1,42 @@
 import React from 'react'
-import s from './TeamList.module.css';
 import Select from 'react-select';
-import TeamCard from './teamCard/TeamCard';
-import ITeamCard from './Interfaces/Interfaces';
+import IPlayerCard from './Interfaces/Interfaces/Interfaces';
+import PlayerCard from './playerCard/PlayerCard';
+import s from './PlayerList.module.css';
 
-export default function TeamList() {
-    const cardAmount = [
-        {value: 6, label: 6},
-        {value: 12, label: 12},
-        {value: 24, label: 24}
-    ]
+export default function PlayerList() {
+  const cardAmount = [
+    {value: 6, label: 6},
+    {value: 12, label: 12},
+    {value: 24, label: 24}
+]
 
-    const style = {
-        control: (base: any) => ({
-          ...base,
-          border: 0,
-          boxShadow: 'none'
-        })
-      };
-      const testCards: ITeamCard[] = [
-        { "name": "testteam1", "foundationYear": 1999, "imageUrl": "https://via.placeholder.com/150", "id": 1 },
-        { "name": "testteam2", "foundationYear": 2000, "imageUrl": "https://via.placeholder.com/150", "id": 2 },
-        { "name": "testteam3", "foundationYear": 2001, "imageUrl": "https://via.placeholder.com/150", "id": 3 },
-        { "name": "testteam4", "foundationYear": 2002, "imageUrl": "https://via.placeholder.com/150", "id": 4 },
-        { "name": "testteam5", "foundationYear": 2003, "imageUrl": "https://via.placeholder.com/150", "id": 5 },
-        { "name": "testteam6", "foundationYear": 2004, "imageUrl": "https://via.placeholder.com/150", "id": 6 },
-      ]
+  const style = {
+      control: (base: any) => ({
+        ...base,
+        border: 0,
+        boxShadow: 'none'
+    })
+  };
 
-    return (
-        <>
+  const testCards: IPlayerCard[] = [
+    // { "name": "player1", "number": 11, "team": "team1", "imageUrl": "https://via.placeholder.com/150", "id": 1 },
+    // { "name": "player2", "number": 12, "team": "team2", "imageUrl": "https://via.placeholder.com/150", "id": 2 },
+    // { "name": "player3", "number": 13, "team": "team3", "imageUrl": "https://via.placeholder.com/150", "id": 3 },
+    // { "name": "player4", "number": 14, "team": "team2", "imageUrl": "https://via.placeholder.com/150", "id": 4 },
+    // { "name": "player5", "number": 15, "team": "team1", "imageUrl": "https://via.placeholder.com/150", "id": 5 },
+    // { "name": "player6", "number": 16, "team": "team3", "imageUrl": "https://via.placeholder.com/150", "id": 6 },
+  ]
+
+  return (
+    <>
             <div className={s.flex}>
                 <span className={s.search}><input type="text" className={s.searchInput} placeholder="Search..."/></span>
                 <button className={s.add}>Add +</button>
             </div>
             
             <div className={s.content}>
-            { testCards.length ? testCards.map(card => <TeamCard cardInfo={card} key={card.id}/>) :
+                { testCards.length ? testCards.map(card => <PlayerCard cardInfo={card} key={card.id}/>) :
                 <div className={s.noContent}>
                   <svg width="482" height="320" viewBox="0 0 482 320" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M66.9306 290.451C66.9306 290.451 31.0377 222.019 75.9216 172.213C120.805 122.408 159.407 150.001 178.992 148.617C198.578 147.233 204.86 103.613 262.799 90.4557C320.739 77.2989 374.731 101.48 368.897 144.875C360.189 209.652 468.861 178.219 413.045 290.734L66.9306 290.451Z" fill="#E8F3FD"/>
