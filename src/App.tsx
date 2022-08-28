@@ -6,13 +6,26 @@ import Players from './modules/players/PlayerList';
 import NotFound from './common/components/NotFound/NotFound';
 import SignIn from './common/components/SignIn/SignIn';
 import SignUp from './common/components/SignUp/SignUp';
+import { useSelector } from 'react-redux';
+import { RootState } from './core/redux';
+
 
 function App() {
-  return (
-    <>
+
+  let isLogged = useSelector<RootState>(state => state.authReducer.isLogged);
+
+  if(!isLogged){
+    return(
       <Routes>
         <Route path='/signin' element={<SignIn />} />
         <Route path='/signup' element={<SignUp />} />
+      </Routes>
+    )
+  }
+  return (
+    <>
+      <Routes>
+        
         <Route path='/' element={<Layout/>}>
           <Route path='teams' element={<TeamList />}/>
           <Route path='players' element={<Players />}/>
