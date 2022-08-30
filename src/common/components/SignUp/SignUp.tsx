@@ -3,7 +3,7 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import s from './SignUp.module.css';
-import { signup } from '../../../core/redux/reducers/authSlice'
+
 
 type FormValues = {
     name: string,
@@ -16,17 +16,11 @@ type FormValues = {
 export default function SignUp() {
     const [visible1, setVisible1] = useState(false);
     const [visible2, setVisible2] = useState(false);
-    const dispatch = useDispatch();
-    const navigate = useNavigate();
 
     const { register, handleSubmit } = useForm<FormValues>();
 
     const onSubmit: SubmitHandler<FormValues> = (e) => {
-        if(e.password === e.repeatPassword && e.agreement){
-            dispatch(signup({userName: e.name, login: e.login, password: e.password}));
-
-            navigate('/signin');
-        }
+        
     }
     
   return (

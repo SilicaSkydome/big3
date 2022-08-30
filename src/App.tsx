@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Layout from './common/Router/Layout'
 import { Routes, Route} from "react-router-dom";
 import TeamList from './modules/teams/TeamList';
@@ -9,12 +9,10 @@ import SignUp from './common/components/SignUp/SignUp';
 import { useSelector } from 'react-redux';
 import { RootState } from './core/redux';
 
-
 function App() {
+  let token = useSelector<RootState>(state => state.authReducer.token)
 
-  let isLogged = useSelector<RootState>(state => state.authReducer.isLogged);
-
-  if(!isLogged){
+  if(!token){
     return(
       <Routes>
         <Route path='/signin' element={<SignIn />} />
@@ -25,8 +23,7 @@ function App() {
   return (
     <>
       <Routes>
-        
-        <Route path='/' element={<Layout/>}>
+        <Route path='/' element={<Layout />}>
           <Route path='teams' element={<TeamList />}/>
           <Route path='players' element={<Players />}/>
         </Route>

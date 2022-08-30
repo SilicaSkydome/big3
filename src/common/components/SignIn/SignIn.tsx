@@ -1,13 +1,19 @@
-import React, { useState } from 'react'
+import React, { useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import s from './SignIn.module.css';
-import { signin } from '../../../core/redux/reducers/authSlice';
+import { setCredentials } from '../../../core/redux/reducers/authSlice';
+import { post } from '../../../api/baseRequest';
 
 type FormValues = {
     login: string,
     password: string,
+}
+type fetchValues = {
+    name: string,
+    avatarUrl: string,
+    token: string
 }
 
 export default function SignIn() {
@@ -17,13 +23,13 @@ export default function SignIn() {
     const navigate = useNavigate();
 
     const onSubmit: SubmitHandler<FormValues> = (e) => {
+        let loggingUser = { login: e.login, password: e.password };
+        const userData = post('/Auth/SignIn', JSON.stringify(loggingUser)).then((data: fetchValues) => {
+            return { name: data.name, avatarUrl: data.avatarUrl, token: data.token };
+        });
 
-        return async (dispatch: any) => {
-
-        }
-
-        dispatch(signin({login: e.login, password: e.password}));
-
+        dispatch(setCredentials({...userData}));
+        console.log({...userData})
         navigate('/teams');
     }
 
