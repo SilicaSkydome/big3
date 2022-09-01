@@ -21,11 +21,10 @@ export default function TeamList() {
     })
   };
   const token: string = useSelector<RootState, string>(state => state.authReducer.token);
-  const [selectedOption, setSelectedOption] = useState<ISelectOption>({value: 6, label: 6});
+  const [selectedOption, setSelectedOption] = useState<SingleValue<ISelectOption>>({value: 6, label: 6});
   const [teams, setTeams] = useState<ITeamCard[]>([]);
 
-  const pageSizeHandler = (selectedOptions: SingleValue<ISelectOption> | MultiValue<ISelectOption>) => {
-    if (!selectedOption) return;
+  const pageSizeHandler = (selectedOption: SingleValue<ISelectOption>) => {
     setSelectedOption(selectedOption);
   }
   const teamsToCards = (teams: ITeam[]):ITeamCard[] => {
@@ -43,7 +42,7 @@ export default function TeamList() {
   }
   
   useEffect(() => {
-    let pageSize:number = selectedOption?.value;
+    let pageSize:number = selectedOption!.value;
     getData(1, pageSize);
 
   }, [selectedOption]);
@@ -130,7 +129,7 @@ export default function TeamList() {
             </div>
             }
         </div>
-        <span className={s.cardAmount}><Select onChange={pageSizeHandler} value={selectedOption} options={cardAmount} menuPlacement="top" styles={style}/></span>
+        <span className={s.cardAmount}><Select onChange={pageSizeHandler} defaultValue={{value: 6, label: 6}} options={cardAmount} menuPlacement="top" styles={style}/></span>
         <div className={s.pages}></div>
     </>
   )

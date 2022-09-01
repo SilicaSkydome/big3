@@ -15,6 +15,6 @@ export interface ITeamCard{
 }
 
 export interface ISelectOption{
-    "label": number,
-    "value": number
+    label: number,
+    value: number
 }

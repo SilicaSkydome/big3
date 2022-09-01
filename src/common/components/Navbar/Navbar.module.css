@@ -16,7 +16,9 @@
 }
 
 .button{
-    padding: 25px 30px;
+    box-sizing: border-box;
+    
+    padding: 25px 10px;
     text-align: center;
     color: #9C9C9C;
     fill: #9C9C9C;
