@@ -88,6 +88,10 @@
 
 .noContent{
     margin: auto;
+    max-width: 500px;
+    width: 100%;
+    max-height: 500px;
+    height: 100%;
 
     background: #FFF;
     border-radius: 15px;

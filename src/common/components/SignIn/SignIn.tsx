@@ -5,31 +5,24 @@ import { Link, useNavigate } from 'react-router-dom';
 import s from './SignIn.module.css';
 import { setCredentials } from '../../../core/redux/reducers/authSlice';
 import { post } from '../../../api/baseRequest';
+import { fetchValues, IsingInProps, SignInFormValues } from '../types/types';
 
-type FormValues = {
-    login: string,
-    password: string,
-}
-type fetchValues = {
-    name: string,
-    avatarUrl: string,
-    token: string
-}
-
-export default function SignIn() {
+export default function SignIn({setToken}:IsingInProps) {
     const [visible, setVisible] = useState(false);
-    const { register, handleSubmit } = useForm<FormValues>();
+    const { register, handleSubmit } = useForm<SignInFormValues>();
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
-    const onSubmit: SubmitHandler<FormValues> = (e) => {
+    const onSubmit: SubmitHandler<SignInFormValues> = (e) => {
         let loggingUser = { login: e.login, password: e.password };
         const userData = post('/Auth/SignIn', JSON.stringify(loggingUser)).then((data: fetchValues) => {
+            if(data.token){
+                setToken(data.token);
+            }
             return { name: data.name, avatarUrl: data.avatarUrl, token: data.token };
         });
-
         dispatch(setCredentials({...userData}));
-        console.log({...userData})
+        window.localStorage.setItem('userData', JSON.stringify(loggingUser));
         navigate('/teams');
     }
 

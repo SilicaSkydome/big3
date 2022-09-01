@@ -1,14 +1,30 @@
+interface IRequestBaseBody {
+    method: string,
+    body?: {}
+}
+interface RequestGenericType {
+    body: {},
+    status: number
+}
+
 const base = 'http://dev.trainee.dex-it.ru/api';
 
-const request = async (url: string, data: {}, token: string | undefined) => {
-  const headersForToken = token ? { Authorization: `Bearer ${token}`, } : { };
+const request = async (url: string, data: IRequestBaseBody, token: string | undefined): Promise<any> => {
+  const headersForToken = token
+    ? {
+      Authorization: `Bearer ${token}`,
+    } : { };
+
+  const headerForMultiPart = typeof data.body === 'string' ? {
+    'Content-Type': 'application/json;charset=utf-8',
+  } : {};
+
   const response = await fetch(url, {
-    
     ...data,
     // @ts-ignore
     headers: {
       ...headersForToken,
-      'Content-Type': 'application/json;charset=utf-8',
+      ...headerForMultiPart,
     },
   });
 

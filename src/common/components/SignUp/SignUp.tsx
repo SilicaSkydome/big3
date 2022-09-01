@@ -2,25 +2,30 @@ import React, { useState } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
+import { post } from '../../../api/baseRequest';
+import { setCredentials } from '../../../core/redux/reducers/authSlice';
+import { fetchValues, IsignUpProps, SignUpFormValues } from '../types/types';
 import s from './SignUp.module.css';
 
-
-type FormValues = {
-    name: string,
-    login: string,
-    password: string,
-    repeatPassword: string,
-    agreement: boolean
-}
-
-export default function SignUp() {
+export default function SignUp({ setToken }: IsignUpProps) {
     const [visible1, setVisible1] = useState(false);
     const [visible2, setVisible2] = useState(false);
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
+    const { register, handleSubmit } = useForm<SignUpFormValues>();
 
-    const { register, handleSubmit } = useForm<FormValues>();
+    const onSubmit: SubmitHandler<SignUpFormValues> = (e) => {
+        let signUpUser = { userName: e.name, login: e.login, password: e.password };
+        const userData = post('/Auth/SignIn', JSON.stringify(signUpUser)).then((data: fetchValues) => {
+            if(data.token){
+                setToken(data.token);
+            }
+            return { name: data.name, avatarUrl: data.avatarUrl, token: data.token };
+        });
 
-    const onSubmit: SubmitHandler<FormValues> = (e) => {
-        
+        dispatch(setCredentials({...userData}));
+        window.localStorage.setItem('userData', JSON.stringify({ login: e.login, password: e.password }));
+        navigate('/teams');
     }
     
   return (

@@ -1,6 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import ITeamCard from '../Interfaces/Interfaces';
+import { ITeamCard } from '../Interfaces/Interfaces';
 import s from './TeamCard.module.css'
 
 interface infoProps {
