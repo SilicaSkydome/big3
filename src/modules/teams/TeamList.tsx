@@ -6,7 +6,6 @@ import { ITeamCard, ISelectOption, ITeam } from './Interfaces/Interfaces';
 import { get } from '../../api/baseRequest';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../core/redux';
-import { resolve } from 'path';
 
 export default function TeamList() {
   const cardAmount = [
@@ -47,7 +46,6 @@ export default function TeamList() {
     let pageSize:number = selectedOption?.value;
     getData(1, pageSize);
 
-    //setTeams(teamList);
   }, [selectedOption]);
 
   return (
@@ -58,7 +56,7 @@ export default function TeamList() {
         </div>
         
         <div className={s.content}>
-        {// teams.length ? teams.map(card => <TeamCard cardInfo={card} key={card.id}/>) :
+        { teams.length ? teams.map(card => <TeamCard cardInfo={card} key={card.id}/>) :
             <div className={s.noContent}>
               <svg width="482" height="320" viewBox="0 0 482 320" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M66.9306 290.451C66.9306 290.451 31.0377 222.019 75.9216 172.213C120.805 122.408 159.407 150.001 178.992 148.617C198.578 147.233 204.86 103.613 262.799 90.4557C320.739 77.2989 374.731 101.48 368.897 144.875C360.189 209.652 468.861 178.219 413.045 290.734L66.9306 290.451Z" fill="#E8F3FD"/>
