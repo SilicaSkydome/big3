@@ -6,8 +6,10 @@ import { ITeamCard, ISelectOption, ITeam } from './Interfaces/Interfaces';
 import { get } from '../../api/baseRequest';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../core/redux';
+import { useNavigate } from 'react-router-dom';
 
 export default function TeamList() {
+  const navigate = useNavigate();
   const cardAmount = [
       {value: 6, label: 6},
       {value: 12, label: 12},
@@ -26,6 +28,9 @@ export default function TeamList() {
 
   const pageSizeHandler = (selectedOption: SingleValue<ISelectOption>) => {
     setSelectedOption(selectedOption);
+  }
+  const addHandler = () => {
+    navigate('/teams/AddTeam');
   }
   const teamsToCards = (teams: ITeam[]):ITeamCard[] => {
     let teamcards = teams.map((team):ITeamCard => {
@@ -51,7 +56,7 @@ export default function TeamList() {
     <>
         <div className={s.flex}>
             <span className={s.search}><input type="text" className={s.searchInput} placeholder="Search..."/></span>
-            <button className={s.add}>Add +</button>
+            <button className={s.add} onClick={addHandler}>Add +</button>
         </div>
         
         <div className={s.content}>

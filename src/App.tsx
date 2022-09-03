@@ -10,6 +10,7 @@ import { fetchValues } from './common/components/types/types';
 import { post } from './api/baseRequest';
 import { setCredentials } from './core/redux/reducers/authSlice';
 import { useDispatch } from 'react-redux';
+import AddTeam from './modules/teams/AddTeam/AddTeam';
 
 function App() {
   let [token, setToken] = useState('');
@@ -45,6 +46,8 @@ function App() {
       <Routes>
         <Route path='/' element={<Layout />}>
           <Route path='teams' element={<TeamList />}/>
+          {/* <Route path='teams/$id' element={} /> */}
+          <Route path='teams/AddTeam' element={<AddTeam />} />
           <Route path='players' element={<Players />}/>
         </Route>
         <Route path='*' element={<NotFound />}/>
