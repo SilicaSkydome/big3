@@ -14,15 +14,19 @@ export default function SignIn({setToken}:IsingInProps) {
     const navigate = useNavigate();
 
     const onSubmit: SubmitHandler<SignInFormValues> = (e) => {
-        let loggingUser = { login: e.login, password: e.password };
-        const userData = post('/Auth/SignIn', JSON.stringify(loggingUser)).then((data: fetchValues) => {
-            if(data.token){
-                setToken(data.token);
-            }
-            return { name: data.name, avatarUrl: data.avatarUrl, token: data.token };
-        });
-        dispatch(setCredentials({...userData}));
-        window.localStorage.setItem('userData', JSON.stringify(loggingUser));
+        let userData = { login: e.login, password: e.password };
+        if(userData){
+            const Auth = post('/Auth/SignIn', JSON.stringify(userData)).then((data: fetchValues) => {
+              if(data.token){
+                  setToken(data.token);
+              }
+              navigate('/teams');
+              let response = { name: data.name, avatarUrl: data.avatarUrl, token: data.token };
+              
+              dispatch(setCredentials(response));
+          });
+          }
+        window.localStorage.setItem('userData', JSON.stringify(userData));
         navigate('/teams');
     }
 

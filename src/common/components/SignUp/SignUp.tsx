@@ -15,15 +15,18 @@ export default function SignUp({ setToken }: IsignUpProps) {
     const { register, handleSubmit } = useForm<SignUpFormValues>();
 
     const onSubmit: SubmitHandler<SignUpFormValues> = (e) => {
-        let signUpUser = { userName: e.name, login: e.login, password: e.password };
-        const userData = post('/Auth/SignIn', JSON.stringify(signUpUser)).then((data: fetchValues) => {
-            if(data.token){
-                setToken(data.token);
-            }
-            return { name: data.name, avatarUrl: data.avatarUrl, token: data.token };
-        });
-
-        dispatch(setCredentials({...userData}));
+        let userData = { userName: e.name, login: e.login, password: e.password };
+        if(userData && e.password === e.repeatPassword && e.agreement === true){
+            const Auth = post('/Auth/SignUn', JSON.stringify(userData)).then((data: fetchValues) => {
+              if(data.token){
+                  setToken(data.token);
+              }
+              navigate('/teams');
+              let response = { name: data.name, avatarUrl: data.avatarUrl, token: data.token };
+              
+              dispatch(setCredentials(response));
+          });
+          }
         window.localStorage.setItem('userData', JSON.stringify({ login: e.login, password: e.password }));
         navigate('/teams');
     }

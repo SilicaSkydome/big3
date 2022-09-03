@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import s from './TeamList.module.css';
-import Select, { MultiValue, SingleValue } from 'react-select';
+import Select, { SingleValue } from 'react-select';
 import TeamCard from './teamCard/TeamCard';
 import { ITeamCard, ISelectOption, ITeam } from './Interfaces/Interfaces';
 import { get } from '../../api/baseRequest';
