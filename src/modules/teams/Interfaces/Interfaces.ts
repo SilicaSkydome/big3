@@ -18,3 +18,11 @@ export interface ISelectOption{
     label: number,
     value: number
 }
+
+export interface ITeamFormData{
+    image?: File,
+    name: string,
+    division: string,
+    conference: string,
+    year: number
+}

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import Layout from './common/Router/Layout'
-import { Routes, Route, useNavigate} from "react-router-dom";
+import { Routes, Route, useNavigate, Navigate} from "react-router-dom";
 import TeamList from './modules/teams/TeamList';
 import Players from './modules/players/PlayerList';
 import NotFound from './common/components/NotFound/NotFound';
@@ -16,7 +16,14 @@ function App() {
   let [token, setToken] = useState('');
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
+  const clearData = { name: '', avatarUrl: '', token: '' };
+  const handleLogOut = () =>{
+    dispatch(setCredentials(clearData));
+    setToken('');
+    navigate('/signin')
+    window.localStorage.removeItem('userData');
+  }
+  
   useEffect(() => {
     let userData: any = window.localStorage.getItem('userData'); 
     userData = JSON.parse(userData);
@@ -38,13 +45,14 @@ function App() {
       <Routes>
         <Route path='/signin' element={<SignIn setToken={setToken} />} />
         <Route path='/signup' element={<SignUp setToken={setToken} />} />
+        <Route path='/*' element={<Navigate to='/signin'/>} />
       </Routes>
     )
   }
   return (
     <>
       <Routes>
-        <Route path='/' element={<Layout />}>
+        <Route path='/' element={<Layout handleLogOut={handleLogOut} />}>
           <Route path='teams' element={<TeamList />}/>
           {/* <Route path='teams/$id' element={} /> */}
           <Route path='teams/AddTeam' element={<AddTeam />} />

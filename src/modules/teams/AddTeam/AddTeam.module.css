@@ -1,4 +1,132 @@
 .container{
+    margin: 40px auto;
     background-color: white;
     border-radius: 10px;
+    max-width: 1000px;
+    width: 100%;
+    max-height: 550px;
+    height: 100%;
+}
+.header{
+    max-height: 70px;
+    height: 100%;
+}
+.header p{
+    box-sizing: border-box;
+    text-align: left;
+    padding: 24px 32px;
+}
+.header p a{
+    font-size: 14px;
+    font-weight: 500;
+    text-decoration: none;
+    color: #E4163A;
+}
+.form{
+    display: flex;
+    flex-direction: row;
+    max-width: 1000px;
+    width: 100%;
+    max-height: 480px;
+    height: 100%;
+    justify-content: space-around;
+    align-content: center;
+}
+.inputs{
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    width: 50%;
+}
+.inputs span{
+    width: auto;
+    box-sizing: border-box;
+    max-height: 80px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items:center;
+    margin-bottom: 20px;
+}
+.inputs label{
+    font-size: 14px;
+    color: #707070;
+    margin: 5px;
+    margin-left: 15%;
+    align-self: start;
+}
+.inputs input{
+    max-width: 360px;
+    width: 100%;
+    max-height: 40px;
+    height: 100%;
+    background: #F6F6F6;
+    border: none;
+    border-radius: 4px;
+    outline: none;
+}
+.buttons{
+    max-width: 360px;
+    width: 100%;
+    max-height: 40px;
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-left: 15%;
+}
+.button{
+    max-width: 170px;
+    width: 100%;
+    max-height: 40px;
+    height: 100%;
+    cursor: pointer;
+}
+.save{
+    color: #FFFFFF;
+    border: none;
+    background: #E4163A;
+    border-radius: 4px;
+}
+.save:hover{
+    background: #FF5761;
+}
+.save:active{
+    background: #C60E2E;
+}
+.cancel{
+    background: #FFFFFF;
+    border: 1px solid #9C9C9C;
+    border-radius: 4px;
+    color: #9C9C9C;
+}
+.cancel:hover{
+    background: #D1D1D1;
+}
+.cancel:active{
+    color: #707070;
+    background: #9C9C9C;
+}
+.image{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.image input{
+    display: none;
+}
+.image label{
+    width: 330px;
+    height: 260px;
+    background: #9C9C9C;
+    opacity: 0.5;
+    border-radius: 10px;
+    text-align: center;
+    vertical-align:middle;
+    cursor: pointer;
+}
+.image label svg{
+    margin-top: 50%;
+    transform: translateY(-100%);
+    cursor: pointer;
 }

@@ -7,6 +7,7 @@ import { get } from '../../api/baseRequest';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../core/redux';
 import { useNavigate } from 'react-router-dom';
+import ReactPaginate from 'react-paginate';
 
 export default function TeamList() {
   const navigate = useNavigate();
@@ -24,6 +25,7 @@ export default function TeamList() {
   };
   const token: string = useSelector<RootState, string>(state => state.authReducer.token);
   const [selectedOption, setSelectedOption] = useState<SingleValue<ISelectOption>>({value: 6, label: 6});
+  const [page, setPage] = useState(1);
   const [teams, setTeams] = useState<ITeamCard[]>([]);
 
   const pageSizeHandler = (selectedOption: SingleValue<ISelectOption>) => {
@@ -32,6 +34,9 @@ export default function TeamList() {
   const addHandler = () => {
     navigate('/teams/AddTeam');
   }
+  const handlePageClick = (e: {selected: number}) => {
+    setPage(e.selected + 1);
+  }
   const teamsToCards = (teams: ITeam[]):ITeamCard[] => {
     let teamcards = teams.map((team):ITeamCard => {
      return {name: team.name, foundationYear: team.foundationYear, imageUrl: team.imageUrl, id: team.id}
@@ -39,7 +44,7 @@ export default function TeamList() {
     return teamcards;
   }
   const getData = async (page: number, pageSize: number) => {
-    let teamFetch = await get(`/Team/GetTeams?Page=${1}&PageSize=${pageSize}`, token);
+    let teamFetch = await get(`/Team/GetTeams?Page=${page}&PageSize=${pageSize}`, token);
     let teamList: ITeam[] = teamFetch.data;
     
     let cards = teamsToCards(teamList);
@@ -50,7 +55,7 @@ export default function TeamList() {
     let pageSize:number = selectedOption!.value;
     getData(1, pageSize);
 
-  }, [selectedOption]);
+  }, [selectedOption, page]);
 
   return (
     <>
@@ -134,7 +139,26 @@ export default function TeamList() {
             </div>
             }
         </div>
-        <span className={s.cardAmount}><Select onChange={pageSizeHandler} defaultValue={{value: 6, label: 6}} options={cardAmount} menuPlacement="top" styles={style}/></span>
+        <span className={s.pageOptions}>
+          <ReactPaginate 
+          previousLabel={'<'}
+          nextLabel={'>'}
+          breakLabel={'...'}
+          pageCount={15}
+          marginPagesDisplayed={4}
+          onPageChange={handlePageClick}
+          containerClassName={s.pagination}
+          pageClassName={s.page}
+          pageLinkClassName={s.pageLink}
+          previousClassName={s.page}
+          previousLinkClassName={s.pageLink}
+          nextClassName={s.page}
+          nextLinkClassName={s.pageLink}
+          activeClassName={s.pageActive}
+          activeLinkClassName={s.pageActiveLink}
+          />
+          <span className={s.cardAmount}><Select onChange={pageSizeHandler} defaultValue={{value: 6, label: 6}} options={cardAmount} menuPlacement="top" styles={style}/></span>
+        </span>
         <div className={s.pages}></div>
     </>
   )
