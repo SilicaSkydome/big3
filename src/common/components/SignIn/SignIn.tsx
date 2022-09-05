@@ -16,7 +16,7 @@ export default function SignIn({setToken}:IsingInProps) {
     const onSubmit: SubmitHandler<SignInFormValues> = (e) => {
         let userData = { login: e.login, password: e.password };
         if(userData){
-            const Auth = post('/Auth/SignIn', JSON.stringify(userData)).then((data: fetchValues) => {
+            post('/Auth/SignIn', JSON.stringify(userData)).then((data: fetchValues) => {
               if(data.token){
                   setToken(data.token);
               }

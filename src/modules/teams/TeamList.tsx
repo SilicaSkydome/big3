@@ -49,6 +49,7 @@ export default function TeamList() {
     
     let cards = teamsToCards(teamList);
     setTeams(cards);
+    console.log(cards)
   }
   
   useEffect(() => {

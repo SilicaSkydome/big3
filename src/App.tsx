@@ -11,6 +11,7 @@ import { post } from './api/baseRequest';
 import { setCredentials } from './core/redux/reducers/authSlice';
 import { useDispatch } from 'react-redux';
 import AddTeam from './modules/teams/AddTeam/AddTeam';
+import TeamInfo from './modules/teams/TeamInfo/TeamInfo';
 
 function App() {
   let [token, setToken] = useState('');
@@ -28,7 +29,7 @@ function App() {
     let userData: any = window.localStorage.getItem('userData'); 
     userData = JSON.parse(userData);
     if(userData){
-      const autoAuth = post('/Auth/SignIn', JSON.stringify(userData)).then((data: fetchValues) => {
+      post('/Auth/SignIn', JSON.stringify(userData)).then((data: fetchValues) => {
         if(data.token){
             setToken(data.token);
         }
@@ -54,7 +55,7 @@ function App() {
       <Routes>
         <Route path='/' element={<Layout handleLogOut={handleLogOut} />}>
           <Route path='teams' element={<TeamList />}/>
-          {/* <Route path='teams/$id' element={} /> */}
+          <Route path='teams/:id' element={<TeamInfo />} />
           <Route path='teams/AddTeam' element={<AddTeam />} />
           <Route path='players' element={<Players />}/>
         </Route>

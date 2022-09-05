@@ -17,7 +17,7 @@ export default function SignUp({ setToken }: IsignUpProps) {
     const onSubmit: SubmitHandler<SignUpFormValues> = (e) => {
         let userData = { userName: e.name, login: e.login, password: e.password };
         if(userData && e.password === e.repeatPassword && e.agreement === true){
-            const Auth = post('/Auth/SignUn', JSON.stringify(userData)).then((data: fetchValues) => {
+            post('/Auth/SignUn', JSON.stringify(userData)).then((data: fetchValues) => {
               if(data.token){
                   setToken(data.token);
               }

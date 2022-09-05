@@ -12,7 +12,7 @@ export default function TeamCard(props: infoProps) {
 
   return (
     <Link className={s.card} to={`/teams/${cardInfo.id}`}>
-        <img src={cardInfo.imageUrl} alt="no data" />
+        <img src={`url(${cardInfo.imageUrl})`} alt="no data" />
         <div className={s.info}>
             <h2 className={s.title}>{cardInfo.name}</h2>
             <h3 className={s.year}>Year of foundation: {cardInfo.foundationYear}</h3>
