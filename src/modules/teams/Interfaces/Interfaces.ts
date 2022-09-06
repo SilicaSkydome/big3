@@ -20,7 +20,7 @@ export interface ISelectOption{
 }
 
 export interface ITeamFormData{
-    image?: string | null,
+    image?: File | null,
     name: string,
     division: string,
     conference: string,

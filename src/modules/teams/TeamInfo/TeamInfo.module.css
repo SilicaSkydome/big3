@@ -12,17 +12,32 @@
 .header{
     max-height: 70px;
     height: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
-.header p{
+.header .images{
+    margin-right: 20px;
+}
+.header .img{
+    margin: 5px;
+    cursor: pointer;
+}
+.header span p{
     box-sizing: border-box;
     text-align: left;
     padding: 24px 32px;
+    
 }
-.header p a{
+.header span p a{
     font-size: 14px;
     font-weight: 500;
     text-decoration: none;
     color: #E4163A;
+}
+.playersHeader p{
+    color: #707070;
+    font-size: 18px;
 }
 .content{
     position: absolute;

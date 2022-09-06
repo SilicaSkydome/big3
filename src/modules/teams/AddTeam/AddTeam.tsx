@@ -3,7 +3,7 @@ import s from './AddTeam.module.css';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { Link, useNavigate } from 'react-router-dom';
 import { ITeamFormData } from '../Interfaces/Interfaces';
-import { post } from '../../../api/baseRequest copy';
+import { post } from '../../../api/baseRequest';
 import { RootState } from '../../../core/redux';
 import { useSelector } from 'react-redux';
 
@@ -33,9 +33,6 @@ export default function AddTeam() {
             setImage(reader.result);
             if(imageLabel.current !== null){
                 imageLabel.current.style.backgroundImage = `url(${reader.result})`;
-                imageLabel.current.style.backgroundPosition = 'center';
-                imageLabel.current.style.backgroundRepeat = 'norepeat';
-                imageLabel.current.style.backgroundSize = 'cover';
             }
         });
         reader.readAsDataURL(e.target.files![0]);

@@ -124,6 +124,10 @@
     text-align: center;
     vertical-align:middle;
     cursor: pointer;
+
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
 }
 .image label svg{
     margin-top: 50%;
