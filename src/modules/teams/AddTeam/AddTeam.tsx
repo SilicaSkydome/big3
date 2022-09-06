@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react'
+import React, { useRef } from 'react'
 import s from './AddTeam.module.css';  
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { Link, useNavigate } from 'react-router-dom';
@@ -12,16 +12,13 @@ import { useSelector } from 'react-redux';
 export default function AddTeam() {
     const navigate = useNavigate();
     const { register, handleSubmit } = useForm<ITeamFormData>();
+    const imgData = new FormData();
     const token: string = useSelector<RootState, string>(state => state.authReducer.token);
-    const [image, setImage] = useState<FileReader["result"]>();
     const imageLabel = useRef<HTMLLabelElement>(null);
     const onSubmit: SubmitHandler<ITeamFormData> = async (e) =>{
-        let teamImage = image ? image : '';
-        let binnaryImage = textToBinary(teamImage);
         let imgUrl;
-        if(teamImage !== ''){
-            await post('/Image/SaveImage', { binnaryImage }, token).then(response => imgUrl = response);
-        }
+        await post('/Image/SaveImage', imgData, token).then(response => imgUrl = response);
+        
         let teamData = { name: e.name, foundationYear: e.year, division: e.division, conference: e.conference, imgUrl: imgUrl };
 
         await post('/Team/Add', JSON.stringify(teamData), token);
@@ -30,23 +27,13 @@ export default function AddTeam() {
     const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const reader = new FileReader();
         reader.addEventListener("load", () => {
-            setImage(reader.result);
             if(imageLabel.current !== null){
                 imageLabel.current.style.backgroundImage = `url(${reader.result})`;
             }
         });
+        imgData.set('file', e.target.files![0]);
         reader.readAsDataURL(e.target.files![0]);
     }
-    const textToBinary = (str:string | ArrayBuffer = '') => {
-        let res = '';
-        if(typeof str === "string"){
-            res = str.split('').map(char => {
-                return char.charCodeAt(0).toString(2);
-            }).join(' ');
-        }
-        
-        return res;
-    };
 
     return (
         <div className={s.container}>
@@ -57,8 +44,8 @@ export default function AddTeam() {
                     type="file" 
                     {...register('image')} 
                     id="file" 
-                    accept='image/png, image/jpeg' 
-                    multiple={false} 
+                    accept='image/*'
+                    required
                     onChange={handleImageChange}/>
                     <label htmlFor="file" ref={imageLabel}>
                         <svg width="74" height="75" viewBox="0 0 74 75" xmlns="http://www.w3.org/2000/svg">
