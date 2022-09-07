@@ -5,7 +5,7 @@ type User = {
         username: string,
         avatarUrl: string,
         token: string
-    }
+    } 
 }
 
 const authSlice = createSlice({
