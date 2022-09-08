@@ -1,16 +1,21 @@
-import React, { useEffect } from "react";
-import Select from "react-select";
-import IPlayerCard from "./Interfaces/Interfaces/Interfaces";
+import React, { useEffect, useState } from "react";
+import ReactPaginate from "react-paginate";
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import Select, { SingleValue } from "react-select";
+import { get } from "../../api/baseRequest";
+import { RootState } from "../../core/redux";
+import IPlayerCard, { IPlayer, ISelectOption } from "./Interfaces/Interfaces";
 import PlayerCard from "./playerCard/PlayerCard";
 import s from "./PlayerList.module.css";
 
 export default function PlayerList() {
+  const navigate = useNavigate();
   const cardAmount = [
     { value: 6, label: 6 },
     { value: 12, label: 12 },
     { value: 24, label: 24 },
   ];
-
   const style = {
     control: (base: any) => ({
       ...base,
@@ -18,17 +23,52 @@ export default function PlayerList() {
       boxShadow: "none",
     }),
   };
-
-  useEffect(() => {}, []);
-
-  const testCards: IPlayerCard[] = [
-    // { "name": "player1", "number": 11, "team": "team1", "imageUrl": "https://via.placeholder.com/150", "id": 1 },
-    // { "name": "player2", "number": 12, "team": "team2", "imageUrl": "https://via.placeholder.com/150", "id": 2 },
-    // { "name": "player3", "number": 13, "team": "team3", "imageUrl": "https://via.placeholder.com/150", "id": 3 },
-    // { "name": "player4", "number": 14, "team": "team2", "imageUrl": "https://via.placeholder.com/150", "id": 4 },
-    // { "name": "player5", "number": 15, "team": "team1", "imageUrl": "https://via.placeholder.com/150", "id": 5 },
-    // { "name": "player6", "number": 16, "team": "team3", "imageUrl": "https://via.placeholder.com/150", "id": 6 },
-  ];
+  const token: string = useSelector<RootState, string>(
+    (state) => state.authReducer.token
+  );
+  const [selectedOption, setSelectedOption] = useState<
+    SingleValue<ISelectOption>
+  >({ value: 6, label: 6 });
+  const [page, setPage] = useState(1);
+  const [players, setPlayers] = useState<IPlayerCard[]>([]);
+  const pageSizeHandler = (selectedOption: SingleValue<ISelectOption>) => {
+    setSelectedOption(selectedOption);
+  };
+  const addHandler = () => {
+    navigate("/Player/AddTeam");
+  };
+  const handlePageClick = (e: { selected: number }) => {
+    setPage(e.selected + 1);
+  };
+  const playersToCards = (players: IPlayer[]): IPlayerCard[] => {
+    let teamcards = players.map((p): IPlayerCard => {
+      return {
+        name: p.name,
+        number: p.number,
+        team: p.teamName,
+        imageUrl: p.avatarUrl,
+        id: p.id,
+      };
+    });
+    return teamcards;
+  };
+  const getData = async (page: number, pageSize: number) => {
+    let teamFetch = await get(
+      `/Player/GetPlayers?Page=${page}&PageSize=${pageSize}`,
+      token
+    );
+    let playerList: IPlayer[] = teamFetch.data;
+    let cards = playersToCards(playerList);
+    setPlayers(cards);
+  };
+  useEffect(() => {
+    let pageSize: number = selectedOption!.value;
+    getData(page, pageSize);
+  }, [selectedOption, page]);
+  useEffect(() => {
+    let pageSize: number = selectedOption!.value;
+    getData(page, pageSize);
+  }, []);
 
   return (
     <>
@@ -44,8 +84,8 @@ export default function PlayerList() {
       </div>
 
       <div className={s.content}>
-        {testCards.length ? (
-          testCards.map((card) => <PlayerCard cardInfo={card} key={card.id} />)
+        {players.length ? (
+          players.map((card) => <PlayerCard cardInfo={card} key={card.id} />)
         ) : (
           <div className={s.noContent}>
             <svg
@@ -328,15 +368,34 @@ export default function PlayerList() {
           </div>
         )}
       </div>
-      <span className={s.cardAmount}>
-        <Select
-          options={cardAmount}
-          defaultValue={{ value: 6, label: 6 }}
-          menuPlacement="top"
-          styles={style}
+      <span className={s.pageOptions}>
+        <ReactPaginate
+          previousLabel={"<"}
+          nextLabel={">"}
+          breakLabel={"..."}
+          pageCount={15}
+          marginPagesDisplayed={4}
+          onPageChange={handlePageClick}
+          containerClassName={s.pagination}
+          pageClassName={s.page}
+          pageLinkClassName={s.pageLink}
+          previousClassName={s.page}
+          previousLinkClassName={s.pageLink}
+          nextClassName={s.page}
+          nextLinkClassName={s.pageLink}
+          activeClassName={s.pageActive}
+          activeLinkClassName={s.pageActiveLink}
         />
+        <span className={s.cardAmount}>
+          <Select
+            onChange={pageSizeHandler}
+            defaultValue={{ value: 6, label: 6 }}
+            options={cardAmount}
+            menuPlacement="top"
+            styles={style}
+          />
+        </span>
       </span>
-      <div className={s.pages}></div>
     </>
   );
 }

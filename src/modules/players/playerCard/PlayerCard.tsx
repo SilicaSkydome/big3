@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import IPlayerCard from "../Interfaces/Interfaces/Interfaces";
+import IPlayerCard from "../Interfaces/Interfaces";
 import s from "./PlayerCard.module.css";
 
 interface infoProps {
@@ -12,7 +12,9 @@ export default function TeamCard(props: infoProps) {
 
   return (
     <Link className={s.card} to={`/teams/${cardInfo.id}`}>
-      <img src={cardInfo.imageUrl} alt="no data" />
+      <div className={s.image}>
+        <img src={cardInfo.imageUrl} alt="no data" />
+      </div>
       <div className={s.info}>
         <h2 className={s.title}>
           {cardInfo.name} <span className={s.number}>{cardInfo.number}</span>

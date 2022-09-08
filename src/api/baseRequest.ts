@@ -1,14 +1,15 @@
 const base = 'http://dev.trainee.dex-it.ru/api';
 
-const request = async (url: string, data: {}, token: string | undefined) => {
+const request = async (url: string, data: any, token: string | undefined) => {
   const headersForToken = token ? { Authorization: `Bearer ${token}`, } : { };
+  const headerForContent = data.body instanceof FormData ? {} : { 'Content-Type': 'application/json;charset=utf-8' }
   const response = await fetch(url, {
-    
+
     ...data,
     // @ts-ignore
     headers: {
       ...headersForToken,
-      'Content-Type': 'application/json;charset=utf-8',
+      ...headerForContent,
     },
   });
 
@@ -34,12 +35,12 @@ const request = async (url: string, data: {}, token: string | undefined) => {
 
 export const get = (url: string, token?: string) => request(`${base}${url}`, { method: 'GET' }, token);
 
-export function post(url: string, body: {}, token?: string) {
+export function post(url: string, body: any, token?: string) {
   return request(`${base}${url}`, { method: 'POST', body }, token);
 }
 
 export const remove = (url: string, token: string) => request(`${base}${url}`, { method: 'DELETE' }, token);
 
-export function put(url: string, body: {}, token: string) {
+export function put(url: string, body: any, token: string) {
   return request(`${base}${url}`, { method: 'PUT', body }, token);
 }

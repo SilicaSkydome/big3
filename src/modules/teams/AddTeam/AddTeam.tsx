@@ -16,19 +16,22 @@ export default function AddTeam() {
   );
   const imageLabel = useRef<HTMLLabelElement>(null);
   const onSubmit: SubmitHandler<ITeamFormData> = async (e) => {
-    let imgUrl;
-    await post("/Image/SaveImage", imgData, token).then(
-      (response) => (imgUrl = response)
-    );
+    let imgUrl: string;
+    let teamData;
 
-    let teamData = {
-      name: e.name,
-      foundationYear: e.year,
-      division: e.division,
-      conference: e.conference,
-      imgUrl: imgUrl,
-    };
-
+    await post("/Image/SaveImage", imgData, token)
+      .then((response: string): void => {
+        imgUrl = response;
+      })
+      .then(() => {
+        teamData = {
+          name: e.name,
+          foundationYear: e.year,
+          division: e.division,
+          conference: e.conference,
+          imageUrl: imgUrl,
+        };
+      });
     await post("/Team/Add", JSON.stringify(teamData), token);
     navigate("/teams");
   };
@@ -81,7 +84,13 @@ export default function AddTeam() {
         <div className={s.inputs}>
           <span>
             <label htmlFor="Name">Name</label>
-            <input type="text" {...register("name")} id="Name" required />
+            <input
+              type="text"
+              {...register("name")}
+              id="Name"
+              required
+              autoComplete="off"
+            />
           </span>
           <span>
             <label htmlFor="Division">Division</label>
@@ -90,6 +99,7 @@ export default function AddTeam() {
               {...register("division")}
               id="Division"
               required
+              autoComplete="off"
             />
           </span>
           <span>
@@ -99,11 +109,18 @@ export default function AddTeam() {
               {...register("conference")}
               id="Conference"
               required
+              autoComplete="off"
             />
           </span>
           <span>
             <label htmlFor="Year">Year of foundation</label>
-            <input type="text" {...register("year")} id="Year" required />
+            <input
+              type="text"
+              {...register("year")}
+              id="Year"
+              required
+              autoComplete="off"
+            />
           </span>
           <div className={s.buttons}>
             <button

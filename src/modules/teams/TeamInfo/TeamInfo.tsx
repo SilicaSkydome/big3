@@ -16,6 +16,8 @@ export default function TeamInfo() {
   const [team, setTeam] = useState<ITeam>();
   const deleteTeamHandler = () => {
     remove(`/Team/Delete/?id=${id}`, token);
+    let deleteImg = team?.imageUrl.substring(8);
+    remove(`/Image/DeleteImage/?fileName=${deleteImg}`, token);
     navigate("/Teams");
   };
   useEffect(() => {
@@ -66,7 +68,12 @@ export default function TeamInfo() {
         </div>
         <div className={s.content}>
           <div className={s.image}>
-            <img src={team?.imageUrl} alt="No Img" width={200} height={200} />
+            <img
+              src={`http://dev.trainee.dex-it.ru${team?.imageUrl}`}
+              alt="No Img"
+              width={200}
+              height={200}
+            />
           </div>
           <div className={s.info}>
             <h1 className={s.name}>{team?.name}</h1>

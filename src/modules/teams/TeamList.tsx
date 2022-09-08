@@ -58,15 +58,18 @@ export default function TeamList() {
       token
     );
     let teamList: ITeam[] = teamFetch.data;
-
     let cards = teamsToCards(teamList);
     setTeams(cards);
   };
 
   useEffect(() => {
     let pageSize: number = selectedOption!.value;
-    getData(1, pageSize);
+    getData(page, pageSize);
   }, [selectedOption, page]);
+  useEffect(() => {
+    let pageSize: number = selectedOption!.value;
+    getData(page, pageSize);
+  }, []);
 
   return (
     <>
@@ -92,7 +95,6 @@ export default function TeamList() {
               width="482"
               height="320"
               viewBox="0 0 482 320"
-              fill="none"
               xmlns="http://www.w3.org/2000/svg"
             >
               <path
@@ -387,7 +389,6 @@ export default function TeamList() {
           />
         </span>
       </span>
-      <div className={s.pages}></div>
     </>
   );
 }
