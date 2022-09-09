@@ -9,7 +9,11 @@ import { RootState } from "../../core/redux";
 import { useNavigate } from "react-router-dom";
 import ReactPaginate from "react-paginate";
 
-export default function TeamList() {
+interface teamProps {
+  setTeamNames: Function;
+}
+
+export default function TeamList({ setTeamNames }: teamProps) {
   const navigate = useNavigate();
   const cardAmount = [
     { value: 6, label: 6 },
@@ -59,6 +63,7 @@ export default function TeamList() {
     );
     let teamList: ITeam[] = teamFetch.data;
     let cards = teamsToCards(teamList);
+    setTeamNames(teamList.map((t) => t.name));
     setTeams(cards);
   };
 

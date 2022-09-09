@@ -9,14 +9,28 @@ import IPlayerCard, { IPlayer, ISelectOption } from "./Interfaces/Interfaces";
 import PlayerCard from "./playerCard/PlayerCard";
 import s from "./PlayerList.module.css";
 
-export default function PlayerList() {
+interface playerProps {
+  teamNames: string[];
+}
+
+export default function PlayerList({ teamNames }: playerProps) {
   const navigate = useNavigate();
   const cardAmount = [
     { value: 6, label: 6 },
     { value: 12, label: 12 },
     { value: 24, label: 24 },
   ];
-  const style = {
+  const teams: { value: string; label: string }[] = teamNames.map((t) => {
+    return { value: t, label: t };
+  });
+  const pageStyle = {
+    control: (base: any) => ({
+      ...base,
+      border: 0,
+      boxShadow: "none",
+    }),
+  };
+  const teamStyle = {
     control: (base: any) => ({
       ...base,
       border: 0,
@@ -40,6 +54,7 @@ export default function PlayerList() {
   const handlePageClick = (e: { selected: number }) => {
     setPage(e.selected + 1);
   };
+  const handleTeamSelect = () => {};
   const playersToCards = (players: IPlayer[]): IPlayerCard[] => {
     let teamcards = players.map((p): IPlayerCard => {
       return {
@@ -53,11 +68,11 @@ export default function PlayerList() {
     return teamcards;
   };
   const getData = async (page: number, pageSize: number) => {
-    let teamFetch = await get(
+    let playerFetch = await get(
       `/Player/GetPlayers?Page=${page}&PageSize=${pageSize}`,
       token
     );
-    let playerList: IPlayer[] = teamFetch.data;
+    let playerList: IPlayer[] = playerFetch.data;
     let cards = playersToCards(playerList);
     setPlayers(cards);
   };
@@ -75,9 +90,21 @@ export default function PlayerList() {
       <div className={s.flex}>
         <span className={s.search}>
           <input
+            id="search"
             type="text"
             className={s.searchInput}
             placeholder="Search..."
+          />
+          <label htmlFor="search"></label>
+          <Select
+            onChange={handleTeamSelect}
+            defaultValue={[]}
+            isMulti
+            // @ts-ignore
+            options={teams}
+            menuPlacement="bottom"
+            styles={teamStyle}
+            className={s.select}
           />
         </span>
         <button className={s.add}>Add +</button>
@@ -392,7 +419,7 @@ export default function PlayerList() {
             defaultValue={{ value: 6, label: 6 }}
             options={cardAmount}
             menuPlacement="top"
-            styles={style}
+            styles={pageStyle}
           />
         </span>
       </span>

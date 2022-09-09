@@ -18,6 +18,7 @@ function App() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const clearData = { name: "", avatarUrl: "", token: "" };
+  const [teamNames, setTeamNames] = useState<string[]>([]);
   const handleLogOut = () => {
     dispatch(setCredentials(clearData));
     setToken("");
@@ -60,10 +61,13 @@ function App() {
     <>
       <Routes>
         <Route path="/" element={<Layout handleLogOut={handleLogOut} />}>
-          <Route path="teams" element={<TeamList />} />
+          <Route
+            path="teams"
+            element={<TeamList setTeamNames={setTeamNames} />}
+          />
           <Route path="teams/:id" element={<TeamInfo />} />
           <Route path="teams/AddTeam" element={<AddTeam />} />
-          <Route path="players" element={<Players />} />
+          <Route path="players" element={<Players teamNames={teamNames} />} />
         </Route>
         <Route path="*" element={<NotFound />} />
       </Routes>
