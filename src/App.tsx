@@ -12,6 +12,7 @@ import { setCredentials } from "./core/redux/reducers/authSlice";
 import { useDispatch } from "react-redux";
 import AddTeam from "./modules/teams/AddTeam/AddTeam";
 import TeamInfo from "./modules/teams/TeamInfo/TeamInfo";
+import AddPlayer from "./modules/players/AddPlayer/AddPlayer";
 
 function App() {
   let [token, setToken] = useState("");
@@ -68,6 +69,7 @@ function App() {
           <Route path="teams/:id" element={<TeamInfo />} />
           <Route path="teams/AddTeam" element={<AddTeam />} />
           <Route path="players" element={<Players teamNames={teamNames} />} />
+          <Route path="players/AddPlayer" element={<AddPlayer />} />
         </Route>
         <Route path="*" element={<NotFound />} />
       </Routes>

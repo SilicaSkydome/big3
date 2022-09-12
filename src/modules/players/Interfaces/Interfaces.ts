@@ -16,8 +16,18 @@ export interface IPlayer{
     "avatarUrl": string,
     "id": number,
     "teamName": string
-  }
+}
 export interface ISelectOption{
     label: number,
     value: number
+}
+export interface IPlayerFormData{
+    image?: FileList,
+    name: string,
+    position: string,
+    team: string,
+    height: number,
+    weight: number,
+    birthday: Date,
+    number: number
 }

@@ -49,7 +49,7 @@ export default function PlayerList({ teamNames }: playerProps) {
     setSelectedOption(selectedOption);
   };
   const addHandler = () => {
-    navigate("/Player/AddTeam");
+    navigate("/players/AddPlayer");
   };
   const handlePageClick = (e: { selected: number }) => {
     setPage(e.selected + 1);
@@ -107,7 +107,9 @@ export default function PlayerList({ teamNames }: playerProps) {
             className={s.select}
           />
         </span>
-        <button className={s.add}>Add +</button>
+        <button className={s.add} onClick={addHandler}>
+          Add +
+        </button>
       </div>
 
       <div className={s.content}>
