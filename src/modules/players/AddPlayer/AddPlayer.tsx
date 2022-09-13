@@ -7,17 +7,28 @@ import { post } from "../../../api/baseRequest";
 import { RootState } from "../../../core/redux";
 import { useSelector } from "react-redux";
 import Select from "react-select";
+import AsyncSelect from "react-select/async";
 
 export default function AddTeam() {
   const customSelect = {
     container: (base: any) => ({
       ...base,
       width: 360,
+      height: 40,
     }),
     control: (base: any) => ({
       ...base,
     }),
+    indicatorSeparator: (base: any) => ({
+      ...base,
+      display: "block",
+      height: 24,
+      alignSelf: "stretch",
+      marginTop: 0,
+      width: 1,
+    }),
   };
+
   const navigate = useNavigate();
   const { register, handleSubmit } = useForm<IPlayerFormData>();
   const selectPositions: { value: string; label: string }[] = [
@@ -27,6 +38,7 @@ export default function AddTeam() {
     { label: "Center", value: "Center" },
     { label: "Guard", value: "Guard" },
   ];
+  const teams: { value: number; label: string }[] = [];
   const imgData = new FormData();
   const token: string = useSelector<RootState, string>(
     (state) => state.authReducer.token
@@ -110,15 +122,28 @@ export default function AddTeam() {
             />
           </span>
           <span>
-            <label htmlFor="Position">Position</label>
+            <label>Position</label>
             <Select
               options={selectPositions}
               defaultValue={selectPositions[0]}
               {...register("position")}
-              id="Position"
               onChange={handlePositionSelect}
               styles={customSelect}
             />
+          </span>
+          <span>
+            <label>Team</label>
+            <Select options={teams} styles={customSelect} />
+          </span>
+          <span className={s.doubleInput}>
+            <span>
+              <label>Height (cm)</label>
+              <input type="text" />
+            </span>
+            <span>
+              <label>Weight</label>
+              <input type="text" />
+            </span>
           </span>
           <div className={s.buttons}>
             <button

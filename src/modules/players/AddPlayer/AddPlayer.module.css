@@ -39,14 +39,21 @@
     width: 50%;
 }
 .inputs span{
-    width: auto;
     box-sizing: border-box;
     max-height: 80px;
     height: 100%;
     display: flex;
     flex-direction: column;
-    align-items:center;
-    margin-bottom: 20px;
+}
+.doubleInput {
+    max-width: 360px;
+    width: 100%;
+    display: flex !important;
+    flex-direction: row !important;
+    justify-content: space-between;
+}
+.doubleInput span{
+
 }
 .inputs label{
     font-size: 14px;
