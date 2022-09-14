@@ -10,7 +10,7 @@ import PlayerCard from "./playerCard/PlayerCard";
 import s from "./PlayerList.module.css";
 
 interface playerProps {
-  teamNames: string[];
+  teamNames: { name: string; id: number }[];
 }
 
 export default function PlayerList({ teamNames }: playerProps) {
@@ -21,7 +21,7 @@ export default function PlayerList({ teamNames }: playerProps) {
     { value: 24, label: 24 },
   ];
   const teams: { value: string; label: string }[] = teamNames.map((t) => {
-    return { value: t, label: t };
+    return { value: t.name, label: t.name };
   });
   const pageStyle = {
     control: (base: any) => ({
@@ -57,10 +57,11 @@ export default function PlayerList({ teamNames }: playerProps) {
   const handleTeamSelect = () => {};
   const playersToCards = (players: IPlayer[]): IPlayerCard[] => {
     let teamcards = players.map((p): IPlayerCard => {
+      let team = teamNames.filter((n) => n.id !== p.team);
       return {
         name: p.name,
         number: p.number,
-        team: p.teamName,
+        team: team[0].name,
         imageUrl: p.avatarUrl,
         id: p.id,
       };

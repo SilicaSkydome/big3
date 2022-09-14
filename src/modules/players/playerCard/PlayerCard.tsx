@@ -7,13 +7,16 @@ interface infoProps {
   cardInfo: IPlayerCard;
 }
 
-export default function TeamCard(props: infoProps) {
-  const { cardInfo } = props;
-
+export default function TeamCard({ cardInfo }: infoProps) {
   return (
-    <Link className={s.card} to={`/teams/${cardInfo.id}`}>
+    <Link className={s.card} to={`/players/${cardInfo.id}`}>
       <div className={s.image}>
-        <img src={cardInfo.imageUrl} alt="no data" />
+        <img
+          src={`http://dev.trainee.dex-it.ru${cardInfo.imageUrl}`}
+          alt="no data"
+          width="150px"
+          height="150px"
+        />
       </div>
       <div className={s.info}>
         <h2 className={s.title}>

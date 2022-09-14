@@ -63,7 +63,11 @@ export default function TeamList({ setTeamNames }: teamProps) {
     );
     let teamList: ITeam[] = teamFetch.data;
     let cards = teamsToCards(teamList);
-    setTeamNames(teamList.map((t) => t.name));
+    setTeamNames(
+      teamList.map((t) => {
+        return { name: t.name, id: t.id };
+      })
+    );
     setTeams(cards);
   };
 

@@ -1,15 +1,18 @@
-import React, { useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import s from "./AddPlayer.module.css";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
-import { IPlayerFormData } from "../Interfaces/Interfaces";
+import { IPlayer, IPlayerFormData } from "../Interfaces/Interfaces";
 import { post } from "../../../api/baseRequest";
 import { RootState } from "../../../core/redux";
 import { useSelector } from "react-redux";
-import Select from "react-select";
-import AsyncSelect from "react-select/async";
+import Select, { SingleValue } from "react-select";
 
-export default function AddTeam() {
+interface playerProps {
+  teamNames: { name: string; id: number }[];
+}
+
+export default function AddPlayer({ teamNames }: playerProps) {
   const customSelect = {
     container: (base: any) => ({
       ...base,
@@ -18,6 +21,19 @@ export default function AddTeam() {
     }),
     control: (base: any) => ({
       ...base,
+      background: "#F6F6F6",
+      border: "none",
+      boxShadow: "none",
+    }),
+    option: (base: any, { data, isDisabled, isFocused, isSelected }: any) => ({
+      ...base,
+      border: "1px solid #D1D1D1",
+      background: isSelected ? "#C60E2E" : "#FFFFFF",
+      color: isSelected ? "#FFFFFF" : "#9C9C9C",
+      ":active": {
+        ...base[":active"],
+        background: "#C60E2E",
+      },
     }),
     indicatorSeparator: (base: any) => ({
       ...base,
@@ -32,38 +48,58 @@ export default function AddTeam() {
   const navigate = useNavigate();
   const { register, handleSubmit } = useForm<IPlayerFormData>();
   const selectPositions: { value: string; label: string }[] = [
-    { label: "Center Forward", value: "Center Forward" },
-    { label: "Guard Forward", value: "Guard Forward" },
+    { label: "Center Forward", value: "CenterForward" },
+    { label: "Guard Forward", value: "GuardForward" },
     { label: "Forward", value: "Forward" },
     { label: "Center", value: "Center" },
     { label: "Guard", value: "Guard" },
   ];
-  const teams: { value: number; label: string }[] = [];
+  const [teams, setTeams] = useState<{ value: number; label: string }[]>([]);
   const imgData = new FormData();
+  const [selectedPosition, setSelectedPosition] = useState<{
+    value: string;
+    label: string;
+  }>(selectPositions[0]);
+  const [selectedTeam, setSelectedTeam] = useState<{
+    value: number;
+    label: string;
+  }>(teams[0]);
   const token: string = useSelector<RootState, string>(
     (state) => state.authReducer.token
   );
   const imageLabel = useRef<HTMLLabelElement>(null);
   const onSubmit: SubmitHandler<IPlayerFormData> = async (e) => {
-    // let imgUrl: string;
-    // let teamData;
-    // await post("/Image/SaveImage", imgData, token)
-    //   .then((response: string): void => {
-    //     imgUrl = response;
-    //   })
-    //   .then(() => {
-    //     teamData = {
-    //       name: e.name,
-    //       foundationYear: e.year,
-    //       division: e.division,
-    //       conference: e.conference,
-    //       imageUrl: imgUrl,
-    //     };
-    //   });
-    // await post("/Team/Add", JSON.stringify(teamData), token);
-    // navigate("/teams");
+    let imgUrl: string;
+    let playerData;
+    await post("/Image/SaveImage", imgData, token)
+      .then((response: string): void => {
+        imgUrl = response;
+      })
+      .then(() => {
+        playerData = {
+          name: e.name,
+          number: e.number,
+          position: selectedPosition.value,
+          team: selectedTeam.value,
+          birthday: e.birthday,
+          height: e.height,
+          weight: e.weight,
+          avatarUrl: imgUrl,
+        };
+      });
+    await post("/Player/Add", JSON.stringify(playerData), token);
+    navigate("/players");
   };
-  const handlePositionSelect = () => {};
+  const handlePositionSelect = (
+    selectedOption: SingleValue<{ value: string; label: string }>
+  ) => {
+    setSelectedPosition(selectedOption!);
+  };
+  const handleTeamSelect = (
+    selectedOption: SingleValue<{ value: number; label: string }>
+  ) => {
+    setSelectedTeam(selectedOption!);
+  };
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const reader = new FileReader();
     reader.addEventListener("load", () => {
@@ -74,6 +110,13 @@ export default function AddTeam() {
     imgData.set("file", e.target.files![0]);
     reader.readAsDataURL(e.target.files![0]);
   };
+
+  useEffect(() => {
+    const teams = teamNames.map((t) => {
+      return { value: t.id, label: t.name };
+    });
+    setTeams(teams);
+  }, []);
 
   return (
     <div className={s.container}>
@@ -112,11 +155,10 @@ export default function AddTeam() {
         </div>
         <div className={s.inputs}>
           <span>
-            <label htmlFor="Name">Name</label>
+            <label>Name</label>
             <input
               type="text"
               {...register("name")}
-              id="Name"
               required
               autoComplete="off"
             />
@@ -125,7 +167,6 @@ export default function AddTeam() {
             <label>Position</label>
             <Select
               options={selectPositions}
-              defaultValue={selectPositions[0]}
               {...register("position")}
               onChange={handlePositionSelect}
               styles={customSelect}
@@ -133,16 +174,51 @@ export default function AddTeam() {
           </span>
           <span>
             <label>Team</label>
-            <Select options={teams} styles={customSelect} />
+            <Select
+              options={teams}
+              {...register("team")}
+              onChange={handleTeamSelect}
+              styles={customSelect}
+            />
           </span>
           <span className={s.doubleInput}>
             <span>
               <label>Height (cm)</label>
-              <input type="text" />
+              <input
+                type="number"
+                {...register("height")}
+                required
+                autoComplete="off"
+              />
             </span>
             <span>
               <label>Weight</label>
-              <input type="text" />
+              <input
+                type="number"
+                {...register("weight")}
+                required
+                autoComplete="off"
+              />
+            </span>
+          </span>
+          <span className={s.doubleInput}>
+            <span>
+              <label>Birthday</label>
+              <input
+                type="date"
+                {...register("birthday")}
+                required
+                style={{ maxWidth: "360px", width: "100%" }}
+              />
+            </span>
+            <span>
+              <label>Number</label>
+              <input
+                type="number"
+                {...register("number")}
+                required
+                autoComplete="off"
+              />
             </span>
           </span>
           <div className={s.buttons}>
