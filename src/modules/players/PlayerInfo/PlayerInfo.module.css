@@ -1,0 +1,74 @@
+.container {
+  margin: 30px auto;
+  margin-bottom: -10px;
+  background-color: white;
+  border-radius: 10px;
+  max-width: 1000px;
+  width: 100%;
+  max-height: 45%;
+  height: 100%;
+  position: relative;
+}
+.image {
+  width: 300px;
+  height: 300px;
+  align-self: flex-end;
+  margin-bottom: 0;
+}
+.header {
+  max-height: 70px;
+  height: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.header .images {
+  margin-right: 20px;
+}
+.header .img {
+  margin: 5px;
+  cursor: pointer;
+}
+.header span p {
+  box-sizing: border-box;
+  text-align: left;
+  padding: 24px 32px;
+}
+.header span p a {
+  font-size: 14px;
+  font-weight: 500;
+  text-decoration: none;
+  color: #e4163a;
+}
+.content {
+  position: absolute;
+  width: 100%;
+  max-height: 525px;
+  height: 100%;
+  top: 70px;
+  bottom: 0px;
+  margin-bottom: -10px;
+
+  background: linear-gradient(276.45deg, #707070 0%, #393939 100.28%);
+  border-radius: 0px 0px 10px 10px;
+
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+.info {
+  color: #ffffff;
+  display: flex;
+  flex-direction: column;
+}
+.genInfo {
+  font-size: 18px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 30px;
+}
+.genInfo strong {
+  font-size: 24px;
+}
