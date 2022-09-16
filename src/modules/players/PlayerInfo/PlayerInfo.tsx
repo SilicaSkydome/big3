@@ -17,7 +17,7 @@ export default function PlayerInfo() {
     remove(`/Player/Delete/?id=${id}`, token);
     let deleteImg = player?.avatarUrl.substring(8);
     remove(`/Image/DeleteImage/?fileName=${deleteImg}`, token);
-    navigate("/Teams");
+    navigate("/players");
   };
   const age = () => {
     let today = new Date();
@@ -38,8 +38,8 @@ export default function PlayerInfo() {
         <div className={s.header}>
           <span>
             <p>
-              <Link to="/teams">Teams</Link> /{" "}
-              <Link to="/teams/">Add new team</Link>
+              <Link to="/players">Players</Link> /{" "}
+              <Link to={`/players/${player?.id}`}>{player?.name}</Link>
             </p>
           </span>
           <span className={s.images}>

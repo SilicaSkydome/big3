@@ -41,7 +41,7 @@ function App() {
           }
           navigate("/teams");
           let response = {
-            name: data.name,
+            username: data.name,
             avatarUrl: data.avatarUrl,
             token: data.token,
           };

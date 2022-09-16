@@ -31,7 +31,7 @@ export default function TeamInfo() {
           <span>
             <p>
               <Link to="/teams">Teams</Link> /{" "}
-              <Link to="/teams/">Add new team</Link>
+              <Link to={`/teams/${team?.id}`}>{team?.name}</Link>
             </p>
           </span>
           <span className={s.images}>
@@ -102,6 +102,19 @@ export default function TeamInfo() {
         <div className={`${s.header} ${s.playersHeader}`}>
           <span>
             <p>Roster</p>
+          </span>
+        </div>
+        <div className={`${s.playersHeader} ${s.players}`}>
+          <span className={`${s.playerInfo} ${s.item}`}>
+            <span className={s.numName}>
+              <p>#</p>
+              <p>Player</p>
+            </span>
+            <span className={s.genPlayInfo}>
+              <p>Height</p>
+              <p>Weight</p>
+              <p>Age</p>
+            </span>
           </span>
         </div>
       </div>
