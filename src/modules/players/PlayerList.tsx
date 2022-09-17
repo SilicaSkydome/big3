@@ -56,8 +56,8 @@ export default function PlayerList({ teamNames }: playerProps) {
   };
   const handleTeamSelect = () => {};
   const playersToCards = (players: IPlayer[]): IPlayerCard[] => {
-    let teamcards = players.map((p): IPlayerCard => {
-      let team = teamNames.filter((n) => n.id !== p.team);
+    return players.map((p): IPlayerCard => {
+      let team = teamNames.filter((t) => t.id === p.team);
       return {
         name: p.name,
         number: p.number,
@@ -66,7 +66,6 @@ export default function PlayerList({ teamNames }: playerProps) {
         id: p.id,
       };
     });
-    return teamcards;
   };
   const getData = async (page: number, pageSize: number) => {
     let playerFetch = await get(

@@ -90,9 +90,18 @@
   gap: 40px;
   align-items: center;
 }
+.playerInfo span:nth-child(2) {
+  width: 250px;
+  justify-content: space-between;
+  text-align: center;
+}
 .playerInfo span p {
   margin: 0;
 }
 .item {
   border-bottom: 0.5px solid #9c9c9c;
+}
+.noPlayers {
+  width: 100%;
+  text-align: center;
 }

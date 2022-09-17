@@ -3,9 +3,10 @@ import { useSelector } from "react-redux";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { get } from "../../../api/baseRequest";
 import { RootState } from "../../../core/redux";
-import { ITeam } from "../Interfaces/Interfaces";
+import { IPlayer, ITeam } from "../Interfaces/Interfaces";
 import s from "./TeamInfo.module.css";
 import { remove } from "../../../api/baseRequest";
+import PlayerLine from "./PlayerLine";
 
 export default function TeamInfo() {
   const token = useSelector<RootState, string>(
@@ -14,6 +15,7 @@ export default function TeamInfo() {
   const navigate = useNavigate();
   const { id } = useParams();
   const [team, setTeam] = useState<ITeam>();
+  const [players, setPlayers] = useState<IPlayer[]>();
   const deleteTeamHandler = () => {
     remove(`/Team/Delete/?id=${id}`, token);
     let deleteImg = team?.imageUrl.substring(8);
@@ -22,6 +24,9 @@ export default function TeamInfo() {
   };
   useEffect(() => {
     get(`/Team/Get/?id=${id}`, token).then((res) => setTeam(res));
+    get(`/Player/GetPlayers?TeamIds=${id}`, token).then((res) => {
+      setPlayers(res.data);
+    });
   }, []);
 
   return (
@@ -116,6 +121,11 @@ export default function TeamInfo() {
               <p>Age</p>
             </span>
           </span>
+          {players?.length ? (
+            players.map((p) => <PlayerLine player={p} key={p.id} />)
+          ) : (
+            <p className={s.noPlayers}>No Players</p>
+          )}
         </div>
       </div>
     </>
