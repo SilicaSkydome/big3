@@ -6,34 +6,45 @@ import s from "./SignIn.module.css";
 import { setCredentials } from "../../../core/redux/reducers/authSlice";
 import { post } from "../../../api/baseRequest";
 import { fetchValues, IsingInProps, SignInFormValues } from "../types/types";
+import { StringLiteralType } from "typescript";
 
 export default function SignIn({ setToken }: IsingInProps) {
   const [visible, setVisible] = useState(false);
   const { register, handleSubmit } = useForm<SignInFormValues>();
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [error, setError] = useState<string>();
 
   const onSubmit: SubmitHandler<SignInFormValues> = (e) => {
     let userData = { login: e.login, password: e.password };
     if (userData) {
       post("/Auth/SignIn", JSON.stringify(userData)).then(
         (data: fetchValues) => {
-          if (data.token) {
-            setToken(data.token);
-          }
-          navigate("/teams");
-          let response = {
-            name: data.name,
-            avatarUrl: data.avatarUrl,
-            token: data.token,
-          };
+          if (!data.isCustomError) {
+            if (data.token) {
+              setToken(data.token);
+            }
+            let response = {
+              name: data.name,
+              avatarUrl: data.avatarUrl,
+              token: data.token,
+            };
 
-          dispatch(setCredentials(response));
+            dispatch(setCredentials(response));
+            window.localStorage.setItem("userData", JSON.stringify(userData));
+            navigate("/teams");
+          }
+          if (data.status === 400) {
+            setError("Unknown error / bad request");
+          }
+          if (data.status === 401) {
+            setError(
+              "User with the specified username / password was not found."
+            );
+          }
         }
       );
     }
-    window.localStorage.setItem("userData", JSON.stringify(userData));
-    navigate("/teams");
   };
 
   return (
@@ -43,7 +54,12 @@ export default function SignIn({ setToken }: IsingInProps) {
           <h2 className={s.title}>Sign In</h2>
           <span>
             <label htmlFor="login">Login</label>
-            <input type="text" {...register("login")} required />
+            <input
+              type="text"
+              {...register("login")}
+              required
+              onChange={() => setError("")}
+            />
           </span>
 
           <span>
@@ -52,6 +68,7 @@ export default function SignIn({ setToken }: IsingInProps) {
               type={visible ? "text" : "password"}
               {...register("password")}
               required
+              onChange={() => setError("")}
             />
             <svg
               width="16"
@@ -74,7 +91,13 @@ export default function SignIn({ setToken }: IsingInProps) {
               )}
             </svg>
           </span>
-
+          {error ? (
+            <p className={s.errorText}>
+              Wrong login or password. Please, try again.
+            </p>
+          ) : (
+            ""
+          )}
           <button className={s.sign}>Sign In</button>
           <p>
             Not a member yet?{" "}
@@ -314,6 +337,13 @@ export default function SignIn({ setToken }: IsingInProps) {
           />
         </svg>
       </div>
+      {error ? (
+        <div className={s.error} onClick={() => setError("")}>
+          <p>{error}</p>
+        </div>
+      ) : (
+        ""
+      )}
     </div>
   );
 }

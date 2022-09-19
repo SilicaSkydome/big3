@@ -7,6 +7,8 @@ export type fetchValues = {
     name: string,
     avatarUrl: string,
     token: string
+    isCustomError?: boolean,
+    status?: number
 }
 export interface IsingInProps {
     setToken: Function

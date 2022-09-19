@@ -31,9 +31,9 @@ function App() {
   };
 
   useEffect(() => {
-    let userData: any = window.localStorage.getItem("userData");
-    userData = JSON.parse(userData);
-    if (userData) {
+    let userData: string | null = window.localStorage.getItem("userData");
+    if (userData !== null) {
+      userData = JSON.parse(userData);
       post("/Auth/SignIn", JSON.stringify(userData)).then(
         (data: fetchValues) => {
           if (data.token) {
