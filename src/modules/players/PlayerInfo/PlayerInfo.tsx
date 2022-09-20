@@ -6,7 +6,11 @@ import { RootState } from "../../../core/redux";
 import { IPlayer } from "../Interfaces/Interfaces";
 import s from "./PlayerInfo.module.css";
 
-export default function PlayerInfo() {
+interface playerInfoProps {
+  setEditPlayer: Function;
+}
+
+export default function PlayerInfo({ setEditPlayer }: playerInfoProps) {
   const token = useSelector<RootState, string>(
     (state) => state.authReducer.token
   );
@@ -30,7 +34,10 @@ export default function PlayerInfo() {
     return age;
   };
   useEffect(() => {
-    get(`/Player/Get/?id=${id}`, token).then((res) => setPlayer(res));
+    get(`/Player/Get/?id=${id}`, token).then((res) => {
+      setPlayer(res);
+      setEditPlayer(res);
+    });
   }, []);
   return (
     <>
@@ -45,6 +52,7 @@ export default function PlayerInfo() {
           <span className={s.images}>
             <svg
               className={s.img}
+              onClick={() => navigate("edit")}
               width="24"
               height="24"
               viewBox="0 0 24 24"

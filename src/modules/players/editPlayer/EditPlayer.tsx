@@ -1,18 +1,19 @@
 import React, { useEffect, useRef, useState } from "react";
-import s from "./AddPlayer.module.css";
+import s from "./EditPlayer.module.css";
 import { SubmitHandler, useForm } from "react-hook-form";
-import { Link, useNavigate } from "react-router-dom";
-import { IPlayerFormData } from "../Interfaces/Interfaces";
-import { post } from "../../../api/baseRequest";
+import { Link, useNavigate, useParams } from "react-router-dom";
+import { IPlayer, IPlayerFormData } from "../Interfaces/Interfaces";
+import { get, post, put } from "../../../api/baseRequest";
 import { RootState } from "../../../core/redux";
 import { useSelector } from "react-redux";
 import Select, { SingleValue } from "react-select";
 
 interface playerProps {
   teamNames: { name: string; id: number }[];
+  playerInfo: IPlayer;
 }
 
-export default function AddPlayer({ teamNames }: playerProps) {
+export default function EditPlayer({ teamNames, playerInfo }: playerProps) {
   const customSelect = {
     container: (base: any) => ({
       ...base,
@@ -44,9 +45,16 @@ export default function AddPlayer({ teamNames }: playerProps) {
       width: 1,
     }),
   };
-
   const navigate = useNavigate();
-  const { register, handleSubmit } = useForm<IPlayerFormData>();
+  const { register, handleSubmit } = useForm<IPlayerFormData>({
+    defaultValues: {
+      name: playerInfo.name,
+      number: playerInfo.number,
+      birthday: playerInfo.birthday,
+      height: playerInfo.height,
+      weight: playerInfo.weight,
+    },
+  });
   const selectPositions: { value: string; label: string }[] = [
     { label: "Center Forward", value: "CenterForward" },
     { label: "Guard Forward", value: "GuardForward" },
@@ -69,25 +77,28 @@ export default function AddPlayer({ teamNames }: playerProps) {
   );
   const imageLabel = useRef<HTMLLabelElement>(null);
   const onSubmit: SubmitHandler<IPlayerFormData> = async (e) => {
-    let imgUrl: string;
-    let playerData;
-    await post("/Image/SaveImage", imgData, token)
-      .then((response: string): void => {
-        imgUrl = response;
-      })
-      .then(() => {
-        playerData = {
-          name: e.name,
-          number: e.number,
-          position: selectedPosition.value,
-          team: selectedTeam.value,
-          birthday: e.birthday,
-          height: e.height,
-          weight: e.weight,
-          avatarUrl: imgUrl,
-        };
-      });
-    await post("/Player/Add", JSON.stringify(playerData), token);
+    let playerData = {
+      name: e.name,
+      number: e.number,
+      position: selectedPosition.value,
+      team: selectedTeam.value,
+      birthday: e.birthday,
+      height: e.height,
+      weight: e.weight,
+      avatarUrl: "",
+      id: playerInfo.id,
+    };
+    if (imgData.has("file")) {
+      await post("/Image/SaveImage", imgData, token).then(
+        (response: string): void => {
+          playerData.avatarUrl = response;
+        }
+      );
+    } else {
+      playerData.avatarUrl = playerInfo.avatarUrl;
+    }
+
+    await put("/Player/Update", JSON.stringify(playerData), token);
     navigate("/players");
   };
   const handlePositionSelect = (
@@ -116,6 +127,15 @@ export default function AddPlayer({ teamNames }: playerProps) {
       return { value: t.id, label: t.name };
     });
     setTeams(teams);
+    if (imageLabel.current !== null) {
+      imageLabel.current.style.backgroundImage = `url(http://dev.trainee.dex-it.ru${playerInfo.avatarUrl})`;
+    }
+    let defPos = selectPositions.filter(
+      (p) => p.value === playerInfo.position
+    )[0];
+    setSelectedPosition(defPos);
+    let defTeam = teams.filter((t) => t.value === playerInfo.team)[0];
+    setSelectedTeam(defTeam);
   }, []);
 
   return (
@@ -123,7 +143,8 @@ export default function AddPlayer({ teamNames }: playerProps) {
       <div className={s.header}>
         <p>
           <Link to="/players">Players</Link> /{" "}
-          <Link to="/teams/AddPlayer">Add Player</Link>
+          <Link to={`/teams/${playerInfo.id}`}>{playerInfo.name}</Link> /{" "}
+          <Link to={`/teams/${playerInfo.id}/edit`}>Edit</Link>
         </p>
       </div>
       <form className={s.form} onSubmit={handleSubmit(onSubmit)}>
@@ -133,7 +154,6 @@ export default function AddPlayer({ teamNames }: playerProps) {
             {...register("image")}
             id="file"
             accept="image/*"
-            required
             onChange={handleImageChange}
           />
           <label htmlFor="file" ref={imageLabel}>
@@ -169,6 +189,11 @@ export default function AddPlayer({ teamNames }: playerProps) {
               options={selectPositions}
               {...register("position")}
               onChange={handlePositionSelect}
+              defaultValue={
+                selectPositions.filter(
+                  (p) => p.value === playerInfo.position
+                )[0]
+              }
               styles={customSelect}
             />
           </span>

@@ -14,11 +14,15 @@ import AddTeam from "./modules/teams/AddTeam/AddTeam";
 import TeamInfo from "./modules/teams/TeamInfo/TeamInfo";
 import AddPlayer from "./modules/players/AddPlayer/AddPlayer";
 import PlayerInfo from "./modules/players/PlayerInfo/PlayerInfo";
+import EditPlayer from "./modules/players/editPlayer/EditPlayer";
+import { IPlayer, ITeam } from "./modules/teams/Interfaces/Interfaces";
 
 function App() {
   let [token, setToken] = useState("");
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [team, setTeam] = useState<ITeam>();
+  const [player, setPlayer] = useState<IPlayer>();
   const clearData = { name: "", avatarUrl: "", token: "" };
   const [teamNames, setTeamNames] = useState<{ name: string; id: number }[]>(
     []
@@ -72,7 +76,14 @@ function App() {
           <Route path="teams/:id" element={<TeamInfo />} />
           <Route path="teams/AddTeam" element={<AddTeam />} />
           <Route path="players" element={<Players teamNames={teamNames} />} />
-          <Route path="players/:id" element={<PlayerInfo />} />
+          <Route
+            path="players/:id"
+            element={<PlayerInfo setEditPlayer={setPlayer} />}
+          />
+          <Route
+            path="players/:id/edit"
+            element={<EditPlayer teamNames={teamNames} playerInfo={player!} />}
+          />
           <Route
             path="players/AddPlayer"
             element={<AddPlayer teamNames={teamNames} />}
