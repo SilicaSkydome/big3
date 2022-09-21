@@ -1,49 +1,49 @@
-.menu{
-    position: absolute;
-    top: 80px;
-    left: 0;
-    bottom: 0;
-    background: #fff;
-    width: 140px;
-    height: auto;
+.menu {
+  position: absolute;
+  top: 80px;
+  left: 0;
+  bottom: 0;
+  background: #fff;
+  width: 140px;
+  height: auto;
 
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
 
-    z-index: 1;
+  z-index: 1;
 }
 
-.button{
-    box-sizing: border-box;
-    
-    padding: 25px 10px;
-    text-align: center;
-    color: #9C9C9C;
-    fill: #9C9C9C;
-    cursor: pointer;
-    text-decoration: none;
+.button {
+  box-sizing: border-box;
 
-    transition: all .1s linear;
+  padding: 25px 10px;
+  text-align: center;
+  color: #9c9c9c;
+  fill: #9c9c9c;
+  cursor: pointer;
+  text-decoration: none;
+
+  transition: all 0.1s linear;
 }
-.button svg{
-    display: block;
-    margin: auto;
+.button svg {
+  display: block;
+  margin: auto;
 }
-.button:hover{
-    fill: #FF5761;
-    color: #FF5761;
+.button:hover {
+  fill: #ff5761;
+  color: #ff5761;
 }
-.button:active{
-    fill: #E4163A;
-    color: #E4163A;
+.button:active {
+  fill: #e4163a;
+  color: #e4163a;
 }
-.active{
-    fill: #E4163A;
-    color: #E4163A;
+.active {
+  fill: #e4163a;
+  color: #e4163a;
 }
-.out{
-    color: #FF768E;
-    fill: #FF768E;
+.out {
+  color: #ff768e;
+  fill: #ff768e;
 }
