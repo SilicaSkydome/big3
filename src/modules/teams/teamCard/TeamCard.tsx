@@ -12,12 +12,14 @@ export default function TeamCard(props: infoProps) {
 
   return (
     <Link className={s.card} to={`/teams/${cardInfo.id}`}>
-      <img
-        src={`http://dev.trainee.dex-it.ru${cardInfo.imageUrl}`}
-        alt="no data"
-        width="150px"
-        height="150px"
-      />
+      <div className={s.image}>
+        <img
+          src={`http://dev.trainee.dex-it.ru${cardInfo.imageUrl}`}
+          alt="no data"
+          width="150px"
+          height="150px"
+        />
+      </div>
       <div className={s.info}>
         <h2 className={s.title}>{cardInfo.name}</h2>
         <h3 className={s.year}>

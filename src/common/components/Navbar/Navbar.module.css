@@ -47,3 +47,8 @@
   color: #ff768e;
   fill: #ff768e;
 }
+@media (max-width: 842px) {
+  .menu {
+    display: none;
+  }
+}

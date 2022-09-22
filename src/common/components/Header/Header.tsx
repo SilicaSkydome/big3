@@ -17,7 +17,7 @@ export default function Header() {
   );
   return (
     <header className={s.head}>
-      <Link to="/teams">
+      <Link to="/teams" className={s.logoContainer}>
         <img src={logo} alt="Error" className={s.logo} />
       </Link>
       <div className={s.user}>

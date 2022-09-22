@@ -1,31 +1,31 @@
-@font-face{
+@font-face {
   font-family: AvenirBlack;
   src: url(./assets/fonts/Avenir-Black.ttf);
-  font-style: normal; 
+  font-style: normal;
   font-weight: normal;
 }
-@font-face{
+@font-face {
   font-family: AvenirMedium;
   src: url(./assets/fonts/Avenir-Medium.ttf);
-  font-style: normal; 
+  font-style: normal;
   font-weight: normal;
 }
-@font-face{
+@font-face {
   font-family: AvenirMediumOblique;
   src: url(./assets/fonts/Avenir-MediumOblique.ttf);
-  font-style: normal; 
+  font-style: normal;
   font-weight: normal;
 }
-@font-face{
+@font-face {
   font-family: AvenirOblique;
   src: url(./assets/fonts/Avenir-Oblique.ttf);
-  font-style: normal; 
+  font-style: normal;
   font-weight: normal;
 }
-@font-face{
+@font-face {
   font-family: AvenirRoman;
   src: url(./assets/fonts/Avenir-Roman.ttf);
-  font-style: normal; 
+  font-style: normal;
   font-weight: normal;
 }
 
@@ -33,16 +33,23 @@ body {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  background: #F6F6F6;
+  background: #f6f6f6;
 
-  font-family: 'AvenirRoman', 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
+  font-family: "AvenirRoman", "Segoe UI", "Roboto", "Oxygen", "Ubuntu",
+    "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
+}
+@media (max-width: 842px) {
+  body::-webkit-scrollbar {
+    display: none;
+  }
+  body {
+    scrollbar-width: none;
+  }
 }
