@@ -143,21 +143,29 @@
   color: #707070;
   margin-top: 5px;
 }
-@media (max-width: 842px) {
+@media (max-width: 650px) {
   .flex {
     flex-direction: column;
     margin: 0;
   }
   .search {
+    position: relative;
+    display: flex;
+    justify-content: center;
     max-width: 100%;
+    margin: 5px 0;
   }
   .searchInput {
-    max-width: 100%;
+    max-width: 95%;
+    margin: 0;
   }
   .add {
-    max-width: 100%;
+    box-sizing: border-box;
+    max-width: 95%;
+    margin: 5px 0;
   }
   .content {
-    margin: 0;
+    width: 95%;
+    margin: 0 auto;
   }
 }

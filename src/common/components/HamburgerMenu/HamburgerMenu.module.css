@@ -1,0 +1,63 @@
+.background {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+
+  z-index: 1000;
+}
+.menu {
+  position: fixed;
+  width: 50%;
+  height: 100%;
+  background: rgba(255, 255, 255, 1);
+
+  z-index: 2000;
+}
+.button {
+  box-sizing: border-box;
+
+  padding: 5px 10px;
+  text-align: center;
+  color: #9c9c9c;
+  fill: #9c9c9c;
+  cursor: pointer;
+  text-decoration: none;
+  display: flex;
+  flex-direction: row;
+  justify-content: start;
+  align-items: center;
+
+  transition: all 0.1s linear;
+}
+.button svg {
+  display: block;
+  margin: 20px;
+}
+.button:hover {
+  fill: #ff5761;
+  color: #ff5761;
+}
+.button:active {
+  fill: #e4163a;
+  color: #e4163a;
+}
+.active {
+  fill: #e4163a;
+  color: #e4163a;
+}
+.out {
+  position: absolute;
+  bottom: 5px;
+  color: #ff768e;
+  fill: #ff768e;
+}
+.user {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 20px;
+  padding: 5px 10px;
+  cursor: pointer;
+  font-size: 2rem;
+}

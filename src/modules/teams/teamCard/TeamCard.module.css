@@ -10,9 +10,9 @@
   background: linear-gradient(121.57deg, #707070 1.62%, #393939 81.02%);
   border-radius: 4px;
 }
-@media (max-width: 842px) {
+@media (max-width: 650px) {
   .card {
-    max-width: 100%;
+    max-width: 49%;
   }
 }
 .image {
