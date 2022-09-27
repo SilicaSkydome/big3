@@ -13,7 +13,7 @@ export default function AddTeam() {
   const imgData = new FormData();
   const token: string = useSelector<RootState, string>(
     (state) => state.authReducer.token
-  );
+  ); 
   const imageLabel = useRef<HTMLLabelElement>(null);
   const onSubmit: SubmitHandler<ITeamFormData> = async (e) => {
     let imgUrl: string;

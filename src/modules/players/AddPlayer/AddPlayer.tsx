@@ -17,7 +17,11 @@ export default function AddPlayer({ teamNames }: playerProps) {
     container: (base: any) => ({
       ...base,
       width: 360,
-      height: 40,
+      height: 50,
+      "@media (max-width: 650px)": {
+        width: "90%",
+        marginLeft: "5%",
+      },
     }),
     control: (base: any) => ({
       ...base,

@@ -95,7 +95,6 @@ export default function PlayerList({ teamNames }: playerProps) {
             className={s.searchInput}
             placeholder="Search..."
           />
-          <label htmlFor="search"></label>
           <Select
             onChange={handleTeamSelect}
             defaultValue={[]}

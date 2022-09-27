@@ -168,4 +168,22 @@
     width: 95%;
     margin: 0 auto;
   }
+  .pageOptions {
+    position: fixed;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+
+    margin: 20px 10px;
+    bottom: 5px;
+    justify-content: space-around;
+    align-items: center;
+  }
+  .cardAmount {
+    position: relative;
+  }
+  .pagination {
+    padding: 0;
+    margin: 0;
+  }
 }
