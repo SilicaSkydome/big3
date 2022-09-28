@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { ChangeEvent, useEffect, useState } from "react";
 import s from "./TeamList.module.css";
 import Select, { SingleValue } from "react-select";
 import TeamCard from "./teamCard/TeamCard";
@@ -35,8 +35,19 @@ export default function TeamList({ setTeamNames }: teamProps) {
     SingleValue<ISelectOption>
   >({ value: 6, label: 6 });
   const [page, setPage] = useState(1);
+  const [search, setSearch] = useState<string>("");
   const [teams, setTeams] = useState<ITeamCard[]>([]);
 
+  const searchHandler = (e: ChangeEvent<HTMLInputElement>) => {
+    setSearch(e.target.value);
+    if (e.target.value === "") {
+      let pageSize: number = selectedOption!.value;
+      getData(page, pageSize);
+      return;
+    }
+    let pageSize: number = selectedOption!.value;
+    getData(page, pageSize, e.target.value);
+  };
   const pageSizeHandler = (selectedOption: SingleValue<ISelectOption>) => {
     setSelectedOption(selectedOption);
   };
@@ -57,11 +68,19 @@ export default function TeamList({ setTeamNames }: teamProps) {
     });
     return teamcards;
   };
-  const getData = async (page: number, pageSize: number) => {
-    let teamFetch = await get(
-      `/Team/GetTeams?Page=${page}&PageSize=${pageSize}`,
-      token
-    );
+  const getData = async (page: number, pageSize: number, name?: string) => {
+    let teamFetch;
+    if (!name) {
+      teamFetch = await get(
+        `/Team/GetTeams?Page=${page}&PageSize=${pageSize}`,
+        token
+      );
+    } else {
+      teamFetch = await get(
+        `/Team/GetTeams?Page=${page}&PageSize=${pageSize}&Name=${name}`,
+        token
+      );
+    }
     let teamList: ITeam[] = teamFetch.data;
     let cards = teamsToCards(teamList);
     setTeamNames(
@@ -89,6 +108,8 @@ export default function TeamList({ setTeamNames }: teamProps) {
             type="text"
             className={s.searchInput}
             placeholder="Search..."
+            value={search}
+            onChange={searchHandler}
           />
         </span>
         <button className={s.add} onClick={addHandler}>

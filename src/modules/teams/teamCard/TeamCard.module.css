@@ -1,7 +1,7 @@
 .card {
   position: relative;
   display: inline-block;
-  max-width: 364px;
+  max-width: 30%;
   min-width: 200px;
   width: 100%;
   max-height: 50%;
