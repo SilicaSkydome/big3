@@ -120,13 +120,21 @@ export default function PlayerList({ teamNames }: playerProps) {
     }
     if (!name && teams) {
       playerFetch = await get(
-        `/Player/GetPlayers?Page=${page}&PageSize=${pageSize}&TeamIds=${teams}`,
+        `/Player/GetPlayers?Page=${page}&PageSize=${pageSize}${teams
+          .map((t) => {
+            return `&TeamIds=${t}`;
+          })
+          .join("")}`,
         token
       );
     }
     if (name && teams) {
       playerFetch = await get(
-        `/Player/GetPlayers?Page=${page}&PageSize=${pageSize}&Name=${name}&TeamIds=${teams}`,
+        `/Player/GetPlayers?Page=${page}&PageSize=${pageSize}&Name=${name}${teams
+          .map((t) => {
+            return `&TeamIds=${t}`;
+          })
+          .join("")}`,
         token
       );
     }
