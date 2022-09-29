@@ -10,12 +10,6 @@
   position: relative;
   border: 0.5px solid #9c9c9c;
 }
-.image {
-  width: 300px;
-  height: 300px;
-  align-self: flex-end;
-  margin-bottom: 0;
-}
 .header {
   max-height: 70px;
   height: 100%;
@@ -57,6 +51,12 @@
   justify-content: space-around;
   align-items: center;
 }
+.image {
+  width: 300px;
+  height: 300px;
+  align-self: flex-end;
+  margin-bottom: 0;
+}
 .info {
   color: #ffffff;
   display: flex;
@@ -75,4 +75,24 @@
 }
 .genInfo strong {
   font-size: 24px;
+}
+@media (max-width: 650px) {
+  .container {
+    max-height: fit-content;
+  }
+  .content {
+    max-height: fit-content;
+    flex-direction: column;
+  }
+  .image {
+    align-self: center;
+  }
+  .info {
+    flex-direction: column;
+    align-items: center;
+  }
+  .genInfo {
+    flex-direction: column;
+    justify-content: space-around;
+  }
 }

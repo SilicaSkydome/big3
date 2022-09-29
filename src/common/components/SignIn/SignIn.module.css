@@ -137,3 +137,19 @@
   align-self: baseline;
   margin-top: 0;
 }
+
+@media (max-width: 650px) {
+  .image {
+    display: none;
+  }
+  .form {
+    width: 90%;
+    padding: 5%;
+  }
+  .formContent {
+    max-width: 100%;
+  }
+  .title {
+    text-align: center;
+  }
+}

@@ -21,7 +21,18 @@ export default function PlayerLine({ player }: playerProps) {
     <span className={`${s.playerInfo} ${s.item}`}>
       <span className={s.numName}>
         <p>{player.number}</p>
-        <p>{player.name}</p>
+        <p>
+          <img
+            src={`http://dev.trainee.dex-it.ru${player.avatarUrl}`}
+            width="50"
+            height="50"
+            alt=""
+          />
+          <span>
+            <p>{player.name}</p>
+            <i>{player.position}</i>
+          </span>
+        </p>
       </span>
       <span className={s.genPlayInfo}>
         <p>{player.height} cm</p>

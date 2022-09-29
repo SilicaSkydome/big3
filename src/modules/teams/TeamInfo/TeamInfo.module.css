@@ -91,12 +91,31 @@
   align-items: center;
 }
 .playerInfo span:nth-child(2) {
-  width: 250px;
+  width: auto;
   justify-content: space-between;
   text-align: center;
 }
 .playerInfo span p {
   margin: 0;
+}
+.numName p:nth-child(2) {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+.numName p:nth-child(2) img {
+  border-radius: 50%;
+}
+.numName p:nth-child(2) span {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 0;
+}
+.numName p:nth-child(2) span i {
+  font-style: normal;
+  color: #9c9c9c;
 }
 .item {
   border-bottom: 0.5px solid #9c9c9c;
@@ -104,4 +123,27 @@
 .noPlayers {
   width: 100%;
   text-align: center;
+}
+@media (max-width: 650px) {
+  .container {
+    max-height: 720px;
+  }
+  .content {
+    max-height: 720px;
+    flex-direction: column;
+  }
+  .image {
+    align-self: center;
+  }
+  .info {
+    flex-direction: column;
+    align-items: center;
+  }
+  .genInfo {
+    flex-direction: column;
+    justify-content: space-around;
+  }
+  .genPlayInfo {
+    display: none !important;
+  }
 }
