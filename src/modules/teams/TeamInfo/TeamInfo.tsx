@@ -8,7 +8,11 @@ import s from "./TeamInfo.module.css";
 import { remove } from "../../../api/baseRequest";
 import PlayerLine from "./PlayerLine";
 
-export default function TeamInfo() {
+interface teamInfoProps {
+  setEditTeam: Function;
+}
+
+export default function TeamInfo({ setEditTeam }: teamInfoProps) {
   const token = useSelector<RootState, string>(
     (state) => state.authReducer.token
   );
@@ -23,7 +27,10 @@ export default function TeamInfo() {
     navigate("/Teams");
   };
   useEffect(() => {
-    get(`/Team/Get/?id=${id}`, token).then((res) => setTeam(res));
+    get(`/Team/Get/?id=${id}`, token).then((res) => {
+      setTeam(res);
+      setEditTeam(res);
+    });
     get(`/Player/GetPlayers?TeamIds=${id}`, token).then((res) => {
       setPlayers(res.data);
     });
@@ -42,6 +49,7 @@ export default function TeamInfo() {
           <span className={s.images}>
             <svg
               className={s.img}
+              onClick={() => navigate("edit")}
               width="24"
               height="24"
               viewBox="0 0 24 24"

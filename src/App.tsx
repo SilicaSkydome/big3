@@ -16,6 +16,7 @@ import AddPlayer from "./modules/players/AddPlayer/AddPlayer";
 import PlayerInfo from "./modules/players/PlayerInfo/PlayerInfo";
 import EditPlayer from "./modules/players/editPlayer/EditPlayer";
 import { IPlayer, ITeam } from "./modules/teams/Interfaces/Interfaces";
+import EditTeam from "./modules/teams/editTeam/EditTeam";
 
 function App() {
   let [token, setToken] = useState("");
@@ -73,7 +74,14 @@ function App() {
             path="teams"
             element={<TeamList setTeamNames={setTeamNames} />}
           />
-          <Route path="teams/:id" element={<TeamInfo />} />
+          <Route
+            path="teams/:id"
+            element={<TeamInfo setEditTeam={setTeam} />}
+          />
+          <Route
+            path="teams/:id/edit"
+            element={<EditTeam teamInfo={team!} />}
+          />
           <Route path="teams/AddTeam" element={<AddTeam />} />
           <Route path="players" element={<Players teamNames={teamNames} />} />
           <Route
