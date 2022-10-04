@@ -34,8 +34,40 @@ export default function PlayerList({ teamNames }: playerProps) {
   const teamStyle = {
     control: (base: any) => ({
       ...base,
-      border: 0,
+      boxSizing: "border-box",
+      height: 40,
+      border: "0.5px solid #D1D1D1",
       boxShadow: "none",
+      backgroundColor: "white",
+      transition: "all 0.5s linear",
+      outline: "none",
+      overflow: "auto",
+      ":hover": {
+        borderColor: "#D1D1D1",
+      },
+    }),
+    option: (base: any) => ({
+      ...base,
+      transition: "all 0.2s linear",
+      ":hover": {
+        background: "#E4163A",
+      },
+    }),
+    multiValue: (base: any) => ({
+      ...base,
+      background: "#E4163A",
+      color: "white",
+    }),
+    multiValueLabel: (base: any) => ({
+      ...base,
+      color: "white",
+    }),
+    multiValueRemove: (base: any) => ({
+      ...base,
+      cursor: "pointer",
+      ":hover": {
+        background: "#E4163A",
+      },
     }),
   };
   const token: string = useSelector<RootState, string>(
